@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Küçük Bir Oyun</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Sana Özel Bir Şey ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,141 +14,103 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ffecd2 100%);
-            background-size: 200% 200%;
-            animation: gradientBG 20s ease infinite;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #4a4a4a;
+            color: #fff;
             overflow: hidden;
             position: relative;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Animated gradient overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-            animation: gradientShift 10s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-
-        /* Floating orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            filter: blur(60px);
-            opacity: 0.5;
-        }
-
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 100%);
-            top: -150px;
-            right: -100px;
-            animation: orbFloat1 25s ease-in-out infinite;
-            opacity: 0.4;
-        }
-
-        .orb-2 {
-            width: 350px;
-            height: 350px;
-            background: linear-gradient(135deg, #e8d5b7 0%, #f5e1c8 100%);
-            bottom: -120px;
-            left: -80px;
-            animation: orbFloat2 30s ease-in-out infinite;
-            opacity: 0.35;
-        }
-
-        .orb-3 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, #fff0e6 0%, #ffe4d6 100%);
-            top: 50%;
-            left: 20%;
-            animation: orbFloat3 20s ease-in-out infinite;
-            opacity: 0.4;
-        }
-
-        .orb-4 {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
-            top: 30%;
-            right: 15%;
-            animation: orbFloat1 22s ease-in-out infinite reverse;
-            opacity: 0.35;
-        }
-
-        @keyframes orbFloat1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -40px) scale(1.1); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(40px, 30px) scale(1.05); }
-        }
-
-        @keyframes orbFloat2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-40px, -30px) scale(1.08); }
-            66% { transform: translate(30px, 40px) scale(0.92); }
-        }
-
-        @keyframes orbFloat3 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(50px, -50px) rotate(10deg); }
-        }
-
-        /* Floating particles */
-        .particles {
+        /* Starfield background */
+        .stars {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            overflow: hidden;
             z-index: 0;
         }
 
-        .particle {
+        .star {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(200, 180, 160, 0.4);
+            background: #fff;
             border-radius: 50%;
-            animation: particleFloat 15s infinite ease-in-out;
+            animation: twinkle 3s infinite ease-in-out;
         }
 
-        @keyframes particleFloat {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
+        /* Floating orbs - more premium */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(80px);
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.3) 0%, transparent 70%);
+            top: -200px;
+            right: -150px;
+            animation: orbFloat1 30s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.25) 0%, transparent 70%);
+            bottom: -150px;
+            left: -100px;
+            animation: orbFloat2 35s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(240, 147, 251, 0.2) 0%, transparent 70%);
+            top: 40%;
+            left: 10%;
+            animation: orbFloat3 25s ease-in-out infinite;
+        }
+
+        .orb-4 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 200, 150, 0.2) 0%, transparent 70%);
+            top: 20%;
+            right: 10%;
+            animation: orbFloat1 28s ease-in-out infinite reverse;
+        }
+
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(50px, 40px) scale(1.05); }
+        }
+
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, -40px) scale(1.1); }
+            66% { transform: translate(40px, 50px) scale(0.9); }
+        }
+
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(60px, -60px); }
+        }
+
+        /* Screen transitions */
         .screen {
             position: absolute;
             width: 100%;
@@ -160,10 +122,8 @@
             padding: 2rem;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
-                        transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
-                        visibility 0.7s ease;
-            transform: translateY(30px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(40px) scale(0.95);
             z-index: 1;
         }
 
@@ -175,182 +135,187 @@
 
         .screen.fade-out {
             opacity: 0;
-            transform: translateY(-30px) scale(0.98);
+            transform: translateY(-40px) scale(0.95);
         }
 
         .text-container {
             text-align: center;
-            max-width: 340px;
+            max-width: 380px;
         }
 
         .main-text {
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             line-height: 2;
             font-weight: 400;
-            letter-spacing: -0.01em;
-            color: #4a4a4a;
+            letter-spacing: 0.01em;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
         }
 
         .intro-text {
-            font-size: 1.2rem;
-            line-height: 2.3;
-            color: #5a5a5a;
+            font-size: 1.25rem;
+            line-height: 2.2;
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 300;
         }
 
         .subtle-text {
             font-size: 0.85rem;
-            color: #999;
-            margin-top: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2rem;
             font-weight: 300;
-            letter-spacing: 0.03em;
         }
 
-        .special-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 500;
-            background: linear-gradient(135deg, #8b7355 0%, #a08060 50%, #c4a882 100%);
+        .highlight {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 0.02em;
-            opacity: 0;
-            transform: scale(0.8);
-            animation: revealName 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            animation-delay: 0.3s;
+            font-weight: 600;
         }
 
-        @keyframes revealName {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
+        /* Premium Buttons */
         .button-container {
             margin-top: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            align-items: center;
         }
 
         .button-row {
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(180, 160, 140, 0.25);
-            padding: 1rem 2.2rem;
-            font-size: 0.95rem;
-            color: #5a5a5a;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: 500;
+            border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: inherit;
-            font-weight: 400;
-            letter-spacing: 0.02em;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.6);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(160, 140, 120, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transform: translateY(-4px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
         .btn:active {
-            transform: translateY(-1px) scale(0.98);
+            transform: translateY(-2px) scale(0.98);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #d4a574 0%, #c9836a 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
-            font-weight: 500;
-            box-shadow: 0 4px 20px rgba(200, 130, 100, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, #e8b58a 0%, #d9937a 100%);
-            box-shadow: 0 8px 30px rgba(200, 130, 100, 0.4),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+            background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
         }
 
         .btn-small {
-            padding: 0.8rem 1.6rem;
-            font-size: 0.9rem;
+            padding: 0.85rem 1.8rem;
+            font-size: 0.95rem;
         }
 
         /* Progress dots */
         .progress-dots {
             position: fixed;
-            bottom: 2rem;
+            bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
-            z-index: 10;
-            transition: opacity 0.5s ease;
+            gap: 12px;
+            z-index: 100;
         }
 
         .dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(180, 140, 120, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .dot.active {
-            background: linear-gradient(135deg, #d4a574 0%, #c9836a 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             transform: scale(1.5);
-            box-shadow: 0 2px 12px rgba(200, 130, 100, 0.5);
+            box-shadow: 0 0 20px rgba(240, 147, 251, 0.6);
         }
 
         .dot.completed {
-            background: rgba(180, 140, 120, 0.5);
+            background: rgba(255, 255, 255, 0.5);
         }
 
-        /* Card styles */
+        /* Quiz options - Premium */
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .quiz-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
+        }
+
+        .quiz-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(8px);
+            border-color: rgba(240, 147, 251, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-btn .letter {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.3) 0%, rgba(245, 87, 108, 0.3) 100%);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Card - Premium glassmorphism */
         .card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border-radius: 28px;
             padding: 2.5rem 2rem;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.06),
-                        0 0 0 1px rgba(255, 255, 255, 0.5);
-            max-width: 320px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 340px;
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -363,15 +328,15 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
         .card h3 {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #999;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 1.5rem;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
         }
 
@@ -381,14 +346,22 @@
 
         .card li {
             font-size: 1rem;
-            color: #4a4a4a;
-            padding: 0.8rem 0;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.9rem 0;
             padding-left: 1.8rem;
             position: relative;
             line-height: 1.6;
             opacity: 0;
-            transform: translateX(-15px);
-            animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            transform: translateX(-20px);
+            animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .card li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #f093fb;
+            font-size: 0.7rem;
         }
 
         .card li:nth-child(1) { animation-delay: 0.2s; }
@@ -398,363 +371,55 @@
         .card li:nth-child(5) { animation-delay: 0.8s; }
 
         @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        .card li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            background: linear-gradient(135deg, #c8b8a8 0%, #e0d0c0 100%);
-            border-radius: 50%;
-            box-shadow: 0 2px 6px rgba(200, 184, 168, 0.4);
+        /* Special name reveal */
+        .special-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1.5rem 0;
+            animation: nameReveal 1.5s ease-out, glow 3s ease-in-out infinite;
         }
 
-        /* Quiz option styling */
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.7rem;
-            margin-top: 2rem;
-            width: 100%;
-            max-width: 300px;
+        @keyframes nameReveal {
+            0% { opacity: 0; transform: scale(0.5) translateY(30px); filter: blur(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
 
-        .quiz-btn {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(180, 160, 140, 0.2);
-            padding: 1.1rem 1.5rem;
-            font-size: 0.95rem;
-            color: #5a5a5a;
-            border-radius: 18px;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: inherit;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        .quiz-btn:hover {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(160, 140, 120, 0.35);
-            transform: translateX(8px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
-        }
-
-        .quiz-btn .letter {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #f0e5da 0%, #faf5f0 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #8a7a6a;
-            flex-shrink: 0;
-            box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Typing animation */
-        .typing-text {
-            display: inline;
-        }
-
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.3em;
-            background: linear-gradient(180deg, #8a7a6a 0%, #a09080 100%);
-            margin-left: 3px;
-            animation: blink 0.8s infinite;
-            vertical-align: text-bottom;
-            border-radius: 1px;
-        }
-
-        @keyframes blink {
-            0%, 45% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
-        /* Reaction animation */
-        .reaction {
-            position: fixed;
-            font-size: 1.8rem;
-            pointer-events: none;
-            animation: floatUp 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            z-index: 100;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-        }
-
-        @keyframes floatUp {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-120px) scale(1.3) rotate(15deg);
-            }
-        }
-
-        /* Final screen */
-        .final-message {
-            font-size: 1.25rem;
-            line-height: 2.1;
-            color: #4a4a4a;
-            text-align: center;
-        }
-
-        .final-container {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-radius: 32px;
-            padding: 3rem 2.5rem;
-            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.08),
-                        0 0 0 1px rgba(255, 255, 255, 0.6);
-            text-align: center;
-            max-width: 360px;
-            position: relative;
-        }
-
-        .final-container::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 20%;
-            right: 20%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(200, 180, 160, 0.5), transparent);
-            border-radius: 2px;
-        }
-
-        .sparkle-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            z-index: 50;
-        }
-
-        .sparkle-container.show {
-            opacity: 1;
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: linear-gradient(135deg, #d4c4b4 0%, #e8ddd0 100%);
-            border-radius: 50%;
-            animation: sparkleFloat 4s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(212, 196, 180, 0.5);
-        }
-
-        @keyframes sparkleFloat {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-                opacity: 0.4;
-            }
-            50% {
-                transform: translateY(-40px) scale(1.5);
-                opacity: 0.8;
-            }
-        }
-
-        .thank-you {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 1.5rem;
-            font-size: 1.1rem;
-            color: #8a7a6a;
-        }
-
-        .thank-you.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Highlight text */
-        .highlight {
-            background: linear-gradient(120deg, transparent 0%, rgba(200, 180, 160, 0.25) 50%, transparent 100%);
-            padding: 0.15em 0.4em;
-            border-radius: 6px;
-            font-weight: 500;
-        }
-
-        /* Name reveal screen special styling */
-        .reveal-screen {
-            background: radial-gradient(ellipse at center, rgba(255, 248, 240, 0.3) 0%, transparent 70%);
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(240, 147, 251, 0.4)); }
+            50% { filter: drop-shadow(0 0 50px rgba(240, 147, 251, 0.7)); }
         }
 
         .pre-reveal-text {
             font-size: 1.1rem;
-            color: #888;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeInSoft 0.8s ease forwards;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
         }
 
         .post-reveal-text {
-            font-size: 1rem;
-            color: #777;
-            margin-top: 1.5rem;
-            opacity: 0;
-            animation: fadeInSoft 0.8s ease forwards;
-            animation-delay: 1.2s;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
         }
 
-        @keyframes fadeInSoft {
-            to { opacity: 1; }
-        }
-
-        /* Responsive */
-        @media (max-width: 400px) {
-            .main-text {
-                font-size: 1.2rem;
-            }
-            
-            .btn {
-                padding: 0.9rem 1.8rem;
-                font-size: 0.9rem;
-            }
-            
-            .card {
-                padding: 2rem 1.5rem;
-            }
-
-            .final-container {
-                padding: 2.5rem 2rem;
-            }
-
-            .progress-dots {
-                bottom: 1.5rem;
-            }
-
-            .special-name {
-                font-size: 2.2rem;
-            }
-        }
-
-        /* Hide button initially for typing effect screens */
-        .delayed-btn {
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .delayed-btn.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Glow effect for special moments */
-        .glow {
-            animation: softGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes softGlow {
-            0%, 100% { filter: drop-shadow(0 0 15px rgba(200, 130, 100, 0.3)); }
-            50% { filter: drop-shadow(0 0 30px rgba(200, 130, 100, 0.5)); }
-        }
-
-        /* Glowing button */
-        .btn-glow {
-            animation: btnGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes btnGlow {
-            0%, 100% { box-shadow: 0 4px 20px rgba(200, 130, 100, 0.3), 0 0 20px rgba(220, 160, 130, 0.2); }
-            50% { box-shadow: 0 4px 30px rgba(200, 130, 100, 0.5), 0 0 35px rgba(220, 160, 130, 0.4); }
-        }
-
-        /* Final reveal styles */
-        .final-reveal {
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .final-reveal.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .final-reveal .big-heart {
-            font-size: 5rem;
-            animation: heartBeat 1s ease-in-out infinite;
-            display: inline-block;
-            filter: drop-shadow(0 0 30px rgba(255, 100, 150, 0.8));
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.1); }
-            50% { transform: scale(1); }
-            75% { transform: scale(1.15); }
-        }
-
-        .final-reveal .love-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-top: 1.5rem;
-            color: #5a4a3a;
-            text-shadow: 0 2px 10px rgba(200, 130, 100, 0.3);
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: linear-gradient(135deg, #ffd1dc, #ffb6c1);
-            pointer-events: none;
-            z-index: 1000;
-            border-radius: 2px;
-            animation: confettiFall 3s ease-out forwards;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Escape button styles */
+        /* Escape button - BIGGER messages */
         .escape-btn-container {
             display: flex;
             gap: 1rem;
             justify-content: center;
             align-items: flex-start;
             margin-top: 2rem;
-            min-height: 120px;
+            min-height: 150px;
             position: relative;
             width: 100%;
-            max-width: 340px;
+            max-width: 380px;
         }
 
         .escape-btn {
@@ -768,41 +433,263 @@
 
         .static-btn {
             position: absolute;
-            left: 10%;
+            left: 5%;
             top: 0;
             z-index: 5;
         }
 
         .escape-message {
-            margin-top: 2rem;
-            font-size: 0.95rem;
-            color: #888;
-            min-height: 1.5rem;
+            margin-top: 5rem;
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+            min-height: 2rem;
             opacity: 0;
-            transform: translateY(5px);
-            transition: all 0.3s ease;
+            transform: translateY(10px) scale(0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
         }
 
         .escape-message.show {
             opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Typing effect */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.3em;
+            background: rgba(255, 255, 255, 0.7);
+            margin-left: 3px;
+            animation: blink 0.8s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Delayed button appearance */
+        .delayed-btn {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .delayed-btn.show {
+            opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Final reveal */
+        .final-container {
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+
+        .final-message {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.5s ease;
+        }
+
+        .final-reveal {
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .final-reveal.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .final-reveal .big-heart {
+            font-size: 6rem;
+            animation: heartBeat 1s ease-in-out infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 40px rgba(255, 100, 150, 0.8));
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+        }
+
+        .final-reveal .love-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 30px rgba(240, 147, 251, 0.5);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            border-radius: 3px;
+            animation: confettiFall 4s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(1080deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle container */
+        .sparkle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .sparkle-container.show {
+            opacity: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkle 3s infinite;
+            box-shadow: 0 0 10px #f093fb, 0 0 20px #f093fb;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Reaction popup */
+        .reaction {
+            position: fixed;
+            font-size: 2.5rem;
+            pointer-events: none;
+            z-index: 1000;
+            animation: reactionFloat 2s ease-out forwards;
+        }
+
+        @keyframes reactionFloat {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+
+        /* Loading screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-emoji {
+            font-size: 3rem;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-bar-container {
+            width: 180px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            border-radius: 4px;
+            animation: loadingProgress 1.5s ease-out forwards;
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="atmospheric-background-179503.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Loading screen -->
+    <div class="loading-screen" id="loading">
+        <div class="loading-emoji">💜</div>
+        <p class="loading-text">Bi saniye, sana özel bi şey geliyo...</p>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- Stars -->
+    <div class="stars" id="stars"></div>
+
     <!-- Floating orbs -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
     <div class="orb orb-4"></div>
 
-    <!-- Floating particles -->
-    <div class="particles" id="particles"></div>
-
     <!-- Progress dots -->
     <div class="progress-dots" id="progress">
         <div class="dot active"></div>
+        <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
@@ -820,17 +707,17 @@
     <div class="screen active" id="screen-0">
         <div class="text-container">
             <p class="intro-text">
-                Küçük bir oyun.<br>
-                Sadece merak için.
+                Hey, sana küçük bi sürprizim var 💜<br>
+                Sadece birkaç dakikanı al.
             </p>
-            <p class="subtle-text">30 saniyeni alacak</p>
+            <p class="subtle-text">çok kısa sürecek, söz ✨</p>
             <div class="button-container">
-                <button class="btn btn-primary" onclick="goToScreen(1)">Başla</button>
+                <button class="btn btn-primary" onclick="playClick(); goToScreen(1)">Başlayalım</button>
             </div>
         </div>
     </div>
 
-    <!-- Screen 1: İlk soru -->
+    <!-- Screen 1: Gülümseme -->
     <div class="screen" id="screen-1">
         <div class="text-container">
             <p class="main-text">
@@ -838,79 +725,79 @@
             </p>
             <div class="button-container">
                 <div class="button-row">
-                    <button class="btn btn-small" onclick="saveAnswer(1, 'Doğru'); showReaction(event, '😊'); goToScreen(2)">Doğru</button>
-                    <button class="btn btn-small" onclick="saveAnswer(1, 'Kesinlikle doğru'); showReaction(event, '✨'); goToScreen(2)">Kesinlikle doğru</button>
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(1, 'Doğru'); showReaction(event, '😊'); goToScreen(2)">Doğru</button>
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(1, 'Kesinliklee'); showReaction(event, '✨'); goToScreen(2)">Kesinliklee</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Screen 2: Birini düşünürken -->
+    <!-- Screen 2: Zaman -->
     <div class="screen" id="screen-2">
         <div class="text-container">
             <p class="main-text">
-                Birini düşünürken zamanın<br>yavaşladığını fark ettin mi?
+                Birini düşünürken zamanın<br><span class="highlight">yavaşladığını</span> fark ettin mi?
             </p>
             <div class="button-container">
-                <button class="btn" onclick="saveAnswer(2, 'Bazen oluyor'); goToScreen(3)">Bazen oluyor</button>
+                <button class="btn" onclick="playClick(); saveAnswer(2, 'Bazen oluyo'); goToScreen(3)">Bazen oluyo</button>
             </div>
         </div>
     </div>
 
-    <!-- Screen 3: Telefonuna bildirim -->
+    <!-- Screen 3: Bildirim -->
     <div class="screen" id="screen-3">
         <div class="text-container">
             <p class="main-text">
                 Telefonuna bildirim gelince<br>kimin mesajını umarsın?
             </p>
             <div class="quiz-options">
-                <button class="quiz-btn" onclick="saveAnswer(3, 'Arkadaşlar'); goToScreen(4)">
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(3, 'Arkadaşlar'); goToScreen(4)">
                     <span class="letter">A</span>
                     <span>Arkadaşlar</span>
                 </button>
-                <button class="quiz-btn" onclick="saveAnswer(3, 'Belli biri var'); showReaction(event, '💫'); goToScreen(4)">
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(3, 'Belli biri var 👀'); showReaction(event, '💫'); goToScreen(4)">
                     <span class="letter">B</span>
-                    <span>Belli biri var</span>
+                    <span>Belli biri var 👀</span>
                 </button>
-                <button class="quiz-btn" onclick="saveAnswer(3, 'Sessizde duruyor'); goToScreen(4)">
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(3, 'Sessizde duruyo'); goToScreen(4)">
                     <span class="letter">C</span>
-                    <span>Sessizde duruyor zaten</span>
+                    <span>Sessizde duruyo zaten</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Screen 4: Beklenmedik -->
+    <!-- Screen 4: Gülümseme -->
     <div class="screen" id="screen-4">
         <div class="text-container">
             <p class="main-text">
-                Son zamanlarda <span class="highlight">beklenmedik bir şey</span><br>seni gülümsetti mi?
+                Son zamanlarda <span class="highlight">beklenmedik bi şey</span><br>seni gülümsetti mi?
             </p>
             <div class="button-container">
                 <div class="button-row">
-                    <button class="btn btn-small" onclick="saveAnswer(4, 'Evet'); goToScreen(5)">Evet</button>
-                    <button class="btn btn-small" onclick="saveAnswer(4, 'Belki birazdan'); goToScreen(5)">Belki birazdan</button>
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(4, 'Evett'); showReaction(event, '🥰'); goToScreen(5)">Evett</button>
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(4, 'Belki birazdan'); goToScreen(5)">Belki birazdan</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Screen 5: Gece düşüncesi -->
+    <!-- Screen 5: Gece -->
     <div class="screen" id="screen-5">
         <div class="text-container">
             <p class="main-text">
-                Gece yatmadan önce<br>son düşündüğün şey ne oluyor?
+                Gece yatmadan önce<br>son düşündüğün şey ne oluyo?
             </p>
             <div class="quiz-options">
-                <button class="quiz-btn" onclick="saveAnswer(5, 'Yarınki işler'); goToScreen(6)">
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(5, 'Yarınki işler'); goToScreen(6)">
                     <span class="letter">A</span>
                     <span>Yarınki işler</span>
                 </button>
-                <button class="quiz-btn" onclick="saveAnswer(5, 'Biri'); showReaction(event, '🌙'); goToScreen(6)">
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(5, 'Birisi 🌙'); showReaction(event, '🌙'); goToScreen(6)">
                     <span class="letter">B</span>
-                    <span>Biri</span>
+                    <span>Birisi 🌙</span>
                 </button>
-                <button class="quiz-btn" onclick="saveAnswer(5, 'Rastgele şeyler'); goToScreen(6)">
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(5, 'Rastgele şeyler'); goToScreen(6)">
                     <span class="letter">C</span>
                     <span>Rastgele şeyler</span>
                 </button>
@@ -918,95 +805,137 @@
         </div>
     </div>
 
-    <!-- Screen 6: Profil Kartı -->
+    <!-- Screen 6: Yeni soru - Mutluluk -->
     <div class="screen" id="screen-6">
-        <div class="card">
-            <h3>Bu profil</h3>
-            <ul>
-                <li>Detaylara dikkat eder</li>
-                <li>Küçük şeyleri önemser</li>
-                <li>Sürpriz yapmayı sever</li>
-                <li>Bazen fazla düşünür</li>
-            </ul>
-        </div>
-        <div class="button-container">
-            <button class="btn delayed-btn" id="profile-btn" onclick="saveAnswer(6, 'Tanıdık geldi'); goToScreen(7)">Tanıdık geldi</button>
+        <div class="text-container">
+            <p class="main-text">
+                Seni en çok ne <span class="highlight">mutlu eder</span>?
+            </p>
+            <div class="quiz-options">
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(6, 'Beklenmedik mesajlar'); goToScreen(7)">
+                    <span class="letter">A</span>
+                    <span>Beklenmedik mesajlar</span>
+                </button>
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(6, 'Küçük sürprizler'); showReaction(event, '🎁'); goToScreen(7)">
+                    <span class="letter">B</span>
+                    <span>Küçük sürprizler</span>
+                </button>
+                <button class="quiz-btn" onclick="playClick(); saveAnswer(6, 'Birinin beni düşünmesi'); goToScreen(7)">
+                    <span class="letter">C</span>
+                    <span>Birinin beni düşünmesi</span>
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Screen 7: Şaka Soru - Kaçan Buton -->
+    <!-- Screen 7: Yeni soru - Hissetmek -->
     <div class="screen" id="screen-7">
         <div class="text-container">
             <p class="main-text">
-                <span class="highlight">Ahmet'in başka kızlarla konuştuğuna</span><br>
-                inanıyor musun?
-            </p>
-            <div class="escape-btn-container" id="escape-container">
-                <button class="btn btn-small static-btn" onclick="saveAnswer(7, 'İnanıyorum 💀'); showReaction(event, '💀'); goToScreen(8)">İnanıyorum</button>
-                <button class="btn btn-small escape-btn" id="escape-btn" onmouseenter="escapeButton(event)" ontouchstart="escapeButton(event)" onclick="tryClickEscape(event)">İnanmıyorum 😝</button>
-            </div>
-            <p class="escape-message" id="escape-message"></p>
-        </div>
-    </div>
-
-    <!-- Screen 8: Tatlı iltifat -->
-    <div class="screen" id="screen-8">
-        <div class="text-container">
-            <p class="main-text">
-                Bu arada,<br>
-                <span class="highlight">çok tatlısın.</span>
+                Birinin seni <span class="highlight">düşündüğünü</span><br>hissettiğin oldu mu?
             </p>
             <div class="button-container">
                 <div class="button-row">
-                    <button class="btn btn-small" onclick="saveAnswer(8, 'Sus'); showReaction(event, '😊'); goToScreen(9)">Sus</button>
-                    <button class="btn btn-small" onclick="saveAnswer(8, 'Dur ya'); showReaction(event, '🙈'); goToScreen(9)">Dur ya</button>
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(7, 'Bazen oluyo'); goToScreen(8)">Bazen oluyo</button>
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(7, 'Şu an oldu gibi'); showReaction(event, '💜'); goToScreen(8)">Şu an oldu gibi</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Screen 9: Tatlı Twist -->
+    <!-- Screen 8: Profil Kartı -->
+    <div class="screen" id="screen-8">
+        <div class="card">
+            <h3>✦ Bu profil</h3>
+            <ul>
+                <li>Detaylara dikkat ediyo</li>
+                <li>Küçük şeyleri önemsiyo</li>
+                <li>Sürpriz yapmayı seviyo</li>
+                <li>Bazen fazla düşünüyo</li>
+                <li>Ama hep iyi niyetli</li>
+            </ul>
+        </div>
+        <div class="button-container">
+            <button class="btn delayed-btn" id="profile-btn" onclick="playClick(); saveAnswer(8, 'Tanıdık geldi'); goToScreen(9)">Tanıdık geldi</button>
+        </div>
+    </div>
+
+    <!-- Screen 9: Şaka Soru - Kaçan Buton -->
     <div class="screen" id="screen-9">
+        <div class="text-container">
+            <p class="main-text">
+                <span class="highlight">Ahmet'in başka kızlarla konuşmadığına</span><br>
+                inanıyo musun?
+            </p>
+            <div class="escape-btn-container" id="escape-container">
+                <button class="btn btn-small static-btn" onclick="playClick(); saveAnswer(9, 'İnanıyorum 😇'); showReaction(event, '😇'); goToScreen(10)">İnanıyorum</button>
+                <button class="btn btn-small escape-btn" id="escape-btn" onmouseenter="escapeButton(event)" ontouchstart="escapeButton(event)" onclick="tryClickEscape(event)">İnanmıyorumm 😝</button>
+            </div>
+            <p class="escape-message" id="escape-message"></p>
+        </div>
+    </div>
+
+    <!-- Screen 10: Tatlı iltifat -->
+    <div class="screen" id="screen-10">
+        <div class="text-container">
+            <p class="main-text">
+                <span class="highlight">çok tatlısınnn.</span>
+            </p>
+            <div class="button-container">
+                <div class="button-row">
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(10, 'Suss 😊'); showReaction(event, '😊'); goToScreen(11)">Suss</button>
+                    <button class="btn btn-small" onclick="playClick(); saveAnswer(10, 'Dur ya 🙈'); showReaction(event, '🙈'); goToScreen(11)">Dur ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 11: Bahane -->
+    <div class="screen" id="screen-11">
         <div class="text-container">
             <p class="main-text" id="twist-text"></p>
             <div class="button-container">
-                <button class="btn btn-primary delayed-btn" id="twist-btn" onclick="goToScreen(10)">Devam et</button>
+                <button class="btn btn-primary delayed-btn" id="twist-btn" onclick="playClick(); goToScreen(12)">Devam et</button>
             </div>
         </div>
     </div>
 
-    <!-- Screen 10: İsim Reveal - SÜRPRIZ -->
-    <div class="screen reveal-screen" id="screen-10">
+    <!-- Screen 12: İsim Reveal -->
+    <div class="screen" id="screen-12">
         <div class="text-container">
-            <p class="pre-reveal-text">Aslında bu oyunun tek bir sebebi var.</p>
-            <p class="special-name glow">Ayşe</p>
-            <p class="post-reveal-text">Sensin.</p>
+            <p class="pre-reveal-text">Aslında bu oyunun tek bi sebebi var.</p>
+            <p class="special-name">Ayşe</p>
+            <p class="post-reveal-text">Sensinn.</p>
             <div class="button-container">
-                <button class="btn delayed-btn" id="reveal-btn" onclick="goToScreen(11)">Devam et</button>
+                <button class="btn delayed-btn" id="reveal-btn" onclick="playClick(); goToScreen(13)">Devam et</button>
             </div>
         </div>
     </div>
 
-    <!-- Screen 11: Final -->
-    <div class="screen" id="screen-11">
+    <!-- Screen 13: Final -->
+    <div class="screen" id="screen-13">
         <div class="final-container" id="final-container">
             <p class="final-message" id="final-message">
-                Seni mutlu etmek hoşuma gidiyor.<br>
-                <span class="highlight">O yüzden bunu yaptım.</span>
+                Seni mutlu etmek hoşuma gidiyo.<br>
+                <span class="highlight">O yüzden bunu yaptımm.</span>
             </p>
             <div class="button-container" id="final-btn-container">
-                <button class="btn btn-primary btn-glow" id="final-btn" onclick="showFinalAnimation()">Gülümsedim</button>
+                <button class="btn btn-primary" id="final-btn" onclick="playClick(); showFinalAnimation()">Gülümsedim</button>
             </div>
             <div class="final-reveal" id="final-reveal"></div>
         </div>
     </div>
 
-    <!-- Sparkle animation container -->
+    <!-- Sparkle container -->
     <div class="sparkle-container" id="sparkles"></div>
 
     <script>
+        // JSONBin.io configuration for cloud storage
+        const JSONBIN_API_KEY = '$2a$10$RL4Gx6xMJy1VzYqyRzxNh.QgE8QwF8yHx9ZqXyJvN8R5P2X1cYyqK';
+        const JSONBIN_BIN_ID = '677867b0ad19ca34f8e54c70';
+        
         let currentScreen = 0;
-        const totalScreens = 12;
+        const totalScreens = 14;
 
         // Answer tracking
         const answers = {};
@@ -1014,34 +943,75 @@
             1: "Bazı insanlar mesaj yazarken bile gülümsetir",
             2: "Birini düşünürken zamanın yavaşladığını fark ettin mi",
             3: "Telefonuna bildirim gelince kimin mesajını umarsın",
-            4: "Beklenmedik bir şey seni gülümsetti mi",
+            4: "Beklenmedik bi şey seni gülümsetti mi",
             5: "Gece yatmadan önce son düşündüğün şey",
-            6: "Bu profil - tanıdık geldi mi",
-            7: "Ahmet'in başka kızlarla konuştuğuna inanıyor musun",
-            8: "Çok tatlısın"
+            6: "Seni en çok ne mutlu eder",
+            7: "Birinin seni düşündüğünü hissettiğin oldu mu",
+            8: "Bu profil - tanıdık geldi mi",
+            9: "Ahmet'in başka kızlarla konuşmadığına inanıyo musun",
+            10: "Çok tatlısın"
         };
 
         function saveAnswer(questionNum, answer) {
             answers[questionNum] = answer;
-            console.log('Cevaplar:', answers);
-            // Save to localStorage
             localStorage.setItem('ayse_oyun_cevaplar', JSON.stringify(answers));
+            
+            // Save to cloud (JSONBin.io)
+            saveToCloud();
+        }
+
+        async function saveToCloud() {
+            try {
+                const data = {
+                    answers: answers,
+                    timestamp: new Date().toLocaleString('tr-TR'),
+                    completed: Object.keys(answers).length >= 8
+                };
+                
+                await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': JSONBIN_API_KEY
+                    },
+                    body: JSON.stringify(data)
+                });
+            } catch (e) {
+                console.log('Cloud save skipped');
+            }
+        }
+
+        async function loadFromCloud() {
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+                    headers: {
+                        'X-Master-Key': JSONBIN_API_KEY
+                    }
+                });
+                const data = await response.json();
+                return data.record;
+            } catch (e) {
+                return null;
+            }
         }
 
         function getAnswers() {
             return JSON.parse(localStorage.getItem('ayse_oyun_cevaplar') || '{}');
         }
 
-        // Create floating particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (12 + Math.random() * 8) + 's';
-                container.appendChild(particle);
+        // Create stars
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (1 + Math.random() * 3) + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (2 + Math.random() * 3) + 's';
+                container.appendChild(star);
             }
         }
 
@@ -1069,29 +1039,28 @@
                 currentScreen = screenNumber;
                 updateProgress(screenNumber);
 
-                // Special handlers for specific screens
-                if (screenNumber === 6) {
+                // Special handlers
+                if (screenNumber === 8) {
                     setTimeout(() => {
                         document.getElementById('profile-btn').classList.add('show');
-                    }, 1200);
+                    }, 1500);
                 }
 
-                if (screenNumber === 9) {
+                if (screenNumber === 11) {
                     typeText();
                 }
 
-                if (screenNumber === 10) {
-                    // Name reveal screen - add extra sparkles
+                if (screenNumber === 12) {
                     setTimeout(() => {
                         document.getElementById('reveal-btn').classList.add('show');
                         createRevealSparkles();
-                    }, 1500);
+                    }, 2000);
                 }
-            }, 400);
+            }, 500);
         }
 
         function typeText() {
-            const text = "Bu bir oyun gibi başladı.\nAslında küçük bir bahane.";
+            const text = "Bu bi oyun gibi başladı.\nAslında küçük bi bahane.";
             const element = document.getElementById('twist-text');
             element.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
             const typingSpan = element.querySelector('.typing-text');
@@ -1105,22 +1074,22 @@
                         typingSpan.innerHTML += text.charAt(i);
                     }
                     i++;
-                    setTimeout(type, 45);
+                    setTimeout(type, 50);
                 } else {
                     element.querySelector('.typing-cursor').style.display = 'none';
                     setTimeout(() => {
                         document.getElementById('twist-btn').classList.add('show');
-                    }, 500);
+                    }, 600);
                 }
             }
-            setTimeout(type, 400);
+            setTimeout(type, 500);
         }
 
         function createRevealSparkles() {
             const container = document.getElementById('sparkles');
             container.innerHTML = '';
             
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 30; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
                 sparkle.style.left = Math.random() * 100 + '%';
@@ -1133,7 +1102,7 @@
 
             setTimeout(() => {
                 container.classList.remove('show');
-            }, 4000);
+            }, 5000);
         }
 
         function showReaction(event, emoji) {
@@ -1144,13 +1113,10 @@
             reaction.style.top = event.clientY + 'px';
             document.body.appendChild(reaction);
             
-            setTimeout(() => {
-                reaction.remove();
-            }, 2500);
+            setTimeout(() => reaction.remove(), 2500);
         }
 
         function showFinalAnimation() {
-            // Hide button and message
             const btnContainer = document.getElementById('final-btn-container');
             const message = document.getElementById('final-message');
             btnContainer.style.opacity = '0';
@@ -1158,16 +1124,13 @@
             message.style.opacity = '0';
             message.style.transform = 'translateY(-20px)';
 
-            // Hide progress dots
             document.getElementById('progress').style.opacity = '0';
 
-            // Create confetti explosion
             createConfetti();
 
-            // Create sparkles
             const sparkleContainer = document.getElementById('sparkles');
             sparkleContainer.innerHTML = '';
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 50; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
                 sparkle.style.left = Math.random() * 100 + '%';
@@ -1178,183 +1141,142 @@
             }
             sparkleContainer.classList.add('show');
 
-            // Show impressive final reveal
             setTimeout(() => {
                 const reveal = document.getElementById('final-reveal');
                 reveal.innerHTML = `
                     <div class="big-heart">💖</div>
-                    <p class="love-text">Seninle her an güzel...</p>
-                    <p style="margin-top: 1rem; font-size: 1rem; opacity: 0.9;">Bu oyunu bitirdin, ama hikaye daha yeni başlıyor ✨</p>
+                    <p class="love-text">Seninle her an güzell...</p>
+                    <p style="margin-top: 1.5rem; font-size: 1.1rem; color: rgba(255,255,255,0.8);">Bu oyunu bitirdin, ama hikaye daha yeni başlıyoo ✨</p>
                 `;
                 reveal.classList.add('show');
-            }, 800);
+            }, 1000);
 
-            // More confetti waves
-            setTimeout(createConfetti, 1000);
-            setTimeout(createConfetti, 2000);
+            setTimeout(createConfetti, 1200);
+            setTimeout(createConfetti, 2400);
+
+            // Final cloud save
+            saveToCloud();
         }
 
         function createConfetti() {
-            const colors = ['#ffd1dc', '#ffb6c1', '#ffecd2', '#fcb69f', '#f5e1c8', '#e8d5b7', '#fce4ec', '#fff0e6'];
-            for (let i = 0; i < 50; i++) {
+            const colors = ['#f093fb', '#f5576c', '#667eea', '#764ba2', '#4facfe', '#00f2fe', '#ffecd2', '#fcb69f'];
+            for (let i = 0; i < 60; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
                     confetti.style.left = Math.random() * 100 + 'vw';
                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.width = (5 + Math.random() * 10) + 'px';
-                    confetti.style.height = (5 + Math.random() * 10) + 'px';
-                    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    confetti.style.width = (8 + Math.random() * 12) + 'px';
+                    confetti.style.height = (8 + Math.random() * 12) + 'px';
+                    confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
                     document.body.appendChild(confetti);
                     
-                    setTimeout(() => confetti.remove(), 4000);
-                }, i * 30);
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 25);
             }
         }
 
-        // Cevapları görmek için basit yöntemler
-        window.cevaplar = function() {
-            const savedAnswers = getAnswers();
-            console.log('%c🎮 Ayşe\'nin Oyun Cevapları 🎮', 'font-size: 20px; color: #d4a574;');
-            console.log('----------------------------');
-            for (let q in questions) {
-                const answer = savedAnswers[q] || answers[q] || 'Cevap verilmedi';
-                console.log(`%c❓ ${questions[q]}`, 'color: #888;');
-                console.log(`%c✅ ${answer}`, 'color: #5a5; font-weight: bold;');
-                console.log('');
-            }
-            return savedAnswers;
-        };
+        // Sound effects
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playClick() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
 
-        // Cevapları kopyalama fonksiyonu
-        window.kopyala = function() {
-            const savedAnswers = getAnswers();
-            let text = "🎮 Ayşe'nin Oyun Cevapları 🎮\n\n";
+        function playEscape() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
             
-            for (let q in questions) {
-                const answer = savedAnswers[q] || answers[q] || 'Cevap verilmedi';
-                text += `❓ ${questions[q]}\n✅ ${answer}\n\n`;
-            }
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
             
-            text += "---\n💖 Oyun tamamlandı!";
+            oscillator.frequency.value = 400;
+            oscillator.type = 'sawtooth';
             
-            // Panoya kopyala
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ Cevaplar panoya kopyalandı! Not defterine yapıştırabilirsin.');
-            }).catch(() => {
-                // Fallback: textarea ile kopyala
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                alert('✅ Cevaplar kopyalandı!');
+            gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.15);
+        }
+
+        function playSuccess() {
+            [523.25, 659.25, 783.99].forEach((freq, i) => {
+                setTimeout(() => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    oscillator.frequency.value = freq;
+                    oscillator.type = 'sine';
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                }, i * 100);
             });
-        };
-
-        // URL'de ?cevaplar varsa göster
-        if (window.location.search.includes('cevaplar')) {
-            setTimeout(() => {
-                const savedAnswers = getAnswers();
-                let text = "🎮 Ayşe'nin Oyun Cevapları 🎮\n\n";
-                
-                for (let q in questions) {
-                    const answer = savedAnswers[q] || answers[q] || 'Cevap verilmedi';
-                    text += `❓ ${questions[q]}\n✅ ${answer}\n\n`;
-                }
-                
-                text += "---\n💖 Oyun tamamlandı!";
-                
-                // Sayfada göster
-                const modal = document.createElement('div');
-                modal.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background: white;
-                    padding: 2rem;
-                    border-radius: 15px;
-                    box-shadow: 0 10px 50px rgba(0,0,0,0.3);
-                    max-width: 500px;
-                    max-height: 80vh;
-                    overflow-y: auto;
-                    z-index: 10000;
-                    font-family: monospace;
-                    white-space: pre-line;
-                `;
-                modal.textContent = text;
-                
-                const closeBtn = document.createElement('button');
-                closeBtn.textContent = 'Kapat';
-                closeBtn.style.cssText = `
-                    margin-top: 1rem;
-                    padding: 0.5rem 1rem;
-                    background: #d4a574;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                `;
-                closeBtn.onclick = () => modal.remove();
-                
-                modal.appendChild(closeBtn);
-                document.body.appendChild(modal);
-            }, 500);
         }
 
-        // Escape button functionality
+        // Escape button
         let escapeCount = 0;
         let canClickEscape = false;
         const escapeMessages = [
             "Hoop! Kaçtı 😏",
-            "Yakalayamazsın 🏃",
-            "Bir daha dene 😄",
-            "Neredeyse yakalıyordun!",
+            "Ahmet iyi biri bana güven 😇",
+            "Ahmet gerçekden sadece seninle konuşmak istiyo 💜",
+            "Yakalayamazsın haha 🏃",
+            "Bi daha dene 😄",
+            "Neredeyse yakalıyodun!",
             "Çok yavaşsın 😜",
-            "Ahmet güvenilir biri, inan bana 😇",
-            "Hâlâ deniyorsun ya 😂",
+            "Hâlâ deniyosun ya 😂",
             "Vazgeç artık 🙈",
             "İnatçı çıktın sen",
-            "Tamam tamam, yakaladın..."
+            "Tamam tamam yakaladın..."
         ];
 
         function escapeButton(event) {
             event.preventDefault();
             event.stopPropagation();
             
-            const btn = document.getElementById('escape-btn');
+            playEscape();
             
-            // Make button escape to anywhere on the screen!
+            const btn = document.getElementById('escape-btn');
             btn.style.position = 'fixed';
             
-            // Calculate random position across the ENTIRE screen
-            const padding = 60; // Keep away from edges
+            const padding = 80;
             const maxX = window.innerWidth - btn.offsetWidth - padding;
             const maxY = window.innerHeight - btn.offsetHeight - padding;
             
             let newX = padding + Math.random() * (maxX - padding);
             let newY = padding + Math.random() * (maxY - padding);
             
-            // Move to new position
             btn.style.left = newX + 'px';
             btn.style.top = newY + 'px';
             btn.style.right = 'auto';
             
-            // Show message
             const messageEl = document.getElementById('escape-message');
             const messageIndex = Math.min(escapeCount, escapeMessages.length - 1);
             messageEl.textContent = escapeMessages[messageIndex];
             messageEl.classList.remove('show');
             
-            // Trigger reflow for animation
             void messageEl.offsetWidth;
             messageEl.classList.add('show');
             
             escapeCount++;
             
-            // After 8 attempts, allow clicking
             if (escapeCount >= 8) {
                 canClickEscape = true;
                 btn.style.transition = 'all 0.5s ease';
@@ -1364,16 +1286,16 @@
         function tryClickEscape(event) {
             event.preventDefault();
             if (canClickEscape) {
-                saveAnswer(7, 'İnanmıyorum 😝 (yakaladı!)');
+                playSuccess();
+                saveAnswer(9, 'İnanıyorum 😝 (yakaladı!)');
                 showReaction(event, '🎉');
-                goToScreen(8);
+                goToScreen(10);
             } else {
-                // Escape again if they somehow click it
                 escapeButton(event);
             }
         }
 
-        // Prevent zoom on double tap for mobile
+        // Prevent zoom on double tap
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function(event) {
             const now = Date.now();
@@ -1383,9 +1305,53 @@
             lastTouchEnd = now;
         }, false);
 
-        // Initialize
-        createParticles();
-        updateProgress(0);
+        // Cloud answers view - ?cevaplar
+        if (window.location.search.includes('cevaplar')) {
+            document.body.innerHTML = '<div style="padding: 2rem; font-family: Inter, sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); min-height: 100vh; color: #fff;"><h1 style="margin-bottom: 2rem; background: linear-gradient(135deg, #f093fb, #f5576c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎮 Ayşe\'nin Cevapları</h1><div id="answers-container"><p style="color: rgba(255,255,255,0.6);">Yükleniyor...</p></div></div>';
+            
+            loadFromCloud().then(data => {
+                const container = document.getElementById('answers-container');
+                if (data && data.answers && Object.keys(data.answers).length > 0) {
+                    let html = `<p style="color: rgba(255,255,255,0.6); margin-bottom: 1.5rem;">📅 Son güncelleme: ${data.timestamp || 'Bilinmiyor'}</p>`;
+                    html += `<p style="color: ${data.completed ? '#4ade80' : '#fbbf24'}; margin-bottom: 2rem;">${data.completed ? '✅ Oyun tamamlandı!' : '⏳ Oyun devam ediyor...'}</p>`;
+                    
+                    for (let q in questions) {
+                        const answer = data.answers[q];
+                        html += `
+                            <div style="background: rgba(255,255,255,0.08); border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+                                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 0.5rem;">❓ ${questions[q]}</p>
+                                <p style="color: #fff; font-size: 1.1rem; font-weight: 500;">${answer ? '✅ ' + answer : '⏸️ Henüz cevap yok'}</p>
+                            </div>
+                        `;
+                    }
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<p style="color: rgba(255,255,255,0.6);">Henüz cevap yok. Oyun oynanmamış veya tamamlanmamış.</p>';
+                }
+            });
+        } else {
+            // Normal game - initialize
+            createStars();
+            updateProgress(0);
+            
+            // Background music - start on first interaction
+            const bgMusic = document.getElementById('bgMusic');
+            bgMusic.volume = 0.15; // Low volume
+            
+            function startMusic() {
+                bgMusic.play().catch(() => {});
+                document.removeEventListener('click', startMusic);
+                document.removeEventListener('touchstart', startMusic);
+            }
+            
+            document.addEventListener('click', startMusic);
+            document.addEventListener('touchstart', startMusic);
+            
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 1500);
+        }
     </script>
 </body>
 </html>
