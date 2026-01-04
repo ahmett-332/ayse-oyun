@@ -27,6 +27,13 @@
             html, body, * {
                 color-scheme: only light !important;
             }
+            .star {
+                background: #fff !important;
+                background-color: #ffffff !important;
+            }
+            .orb {
+                opacity: 1 !important;
+            }
         }
 
         body {
@@ -55,9 +62,12 @@
 
         .star {
             position: absolute;
-            background: #fff;
+            background: #fff !important;
+            background-color: #fff !important;
             border-radius: 50%;
             animation: twinkle 3s infinite ease-in-out;
+            -webkit-filter: none !important;
+            filter: none !important;
         }
 
         @keyframes twinkle {
@@ -724,10 +734,10 @@
     <div class="screen active" id="screen-0">
         <div class="text-container">
             <p class="intro-text">
-                Hey, sana küçük bi sürprizim var 💜<br>
-                Sadece birkaç dakikanı al.
+                Sana özel bi şey hazırladım 💜<br>
+                Sadece seninle paylaşmak istedim.
             </p>
-            <p class="subtle-text">çok kısa sürecek, söz ✨</p>
+            <p class="subtle-text">birkaç dakikanı al, söz kısa sürecek ✨</p>
             <div class="button-container">
                 <button class="btn btn-primary" onclick="playClick(); goToScreen(1)">Başlayalım</button>
             </div>
@@ -1367,7 +1377,7 @@
             // Hide loading screen
             setTimeout(() => {
                 document.getElementById('loading').classList.add('hidden');
-            }, 1500);
+            }, 2500);
         }
     </script>
 </body>
