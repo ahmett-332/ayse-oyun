@@ -1361,31 +1361,75 @@
             createStars();
             updateProgress(0);
             
-            // Background music - start on first interaction
+            // Background music - iOS/Safari compatible
             const bgMusic = document.getElementById('bgMusic');
             bgMusic.volume = 0.15; // Low volume
             let musicStarted = false;
             
-            function startMusic() {
-                if (!musicStarted) {
-                    musicStarted = true;
-                    bgMusic.play().then(() => {
-                        console.log('Music started');
-                    }).catch((e) => {
-                        console.log('Music autoplay blocked:', e);
-                    });
+            // Create audio context for mobile
+            let audioContext = null;
+            
+            function initAudioContext() {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume();
+                    }
                 }
             }
             
-            // Try to start music on any interaction
-            document.addEventListener('click', startMusic, { once: false });
-            document.addEventListener('touchstart', startMusic, { once: false });
-            document.addEventListener('touchend', startMusic, { once: false });
+            function startMusic() {
+                if (!musicStarted) {
+                    initAudioContext();
+                    
+                    // Force user interaction context
+                    const playPromise = bgMusic.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            musicStarted = true;
+                            console.log('Music started successfully');
+                        }).catch((error) => {
+                            console.log('Music play failed:', error);
+                            musicStarted = false; // Reset to try again
+                        });
+                    }
+                }
+            }
             
-            // Also try when loading screen disappears
+            // Multiple event listeners for mobile compatibility
+            const events = ['click', 'touchstart', 'touchend', 'mousedown', 'keydown'];
+            
+            events.forEach(event => {
+                document.addEventListener(event, (e) => {
+                    if (!musicStarted) {
+                        startMusic();
+                    }
+                }, { once: false, passive: true });
+            });
+            
+            // Special handling for Android Chrome
+            if (navigator.userAgent.includes('Android')) {
+                document.body.addEventListener('click', function playOnce() {
+                    startMusic();
+                    document.body.removeEventListener('click', playOnce);
+                }, { once: true });
+                
+                // Also try on first button click
+                const firstButton = document.querySelector('button');
+                if (firstButton) {
+                    firstButton.addEventListener('click', function() {
+                        setTimeout(startMusic, 100);
+                    }, { once: true });
+                }
+            }
+            
+            // Try after loading screen
             setTimeout(() => {
-                startMusic();
-            }, 2600);
+                if (!musicStarted) {
+                    startMusic();
+                }
+            }, 3000);
             
             // Hide loading screen
             setTimeout(() => {
