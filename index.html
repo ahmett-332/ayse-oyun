@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="color-scheme" content="only light">
     <title>Sana Özel Bir Şey ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -10,6 +11,22 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Force colors - prevent dark mode interference */
+        :root {
+            color-scheme: only light;
+        }
+
+        html, body {
+            -webkit-text-fill-color: initial;
+            forced-color-adjust: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html, body, * {
+                color-scheme: only light !important;
+            }
         }
 
         body {
