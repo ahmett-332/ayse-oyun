@@ -1364,15 +1364,28 @@
             // Background music - start on first interaction
             const bgMusic = document.getElementById('bgMusic');
             bgMusic.volume = 0.15; // Low volume
+            let musicStarted = false;
             
             function startMusic() {
-                bgMusic.play().catch(() => {});
-                document.removeEventListener('click', startMusic);
-                document.removeEventListener('touchstart', startMusic);
+                if (!musicStarted) {
+                    musicStarted = true;
+                    bgMusic.play().then(() => {
+                        console.log('Music started');
+                    }).catch((e) => {
+                        console.log('Music autoplay blocked:', e);
+                    });
+                }
             }
             
-            document.addEventListener('click', startMusic);
-            document.addEventListener('touchstart', startMusic);
+            // Try to start music on any interaction
+            document.addEventListener('click', startMusic, { once: false });
+            document.addEventListener('touchstart', startMusic, { once: false });
+            document.addEventListener('touchend', startMusic, { once: false });
+            
+            // Also try when loading screen disappears
+            setTimeout(() => {
+                startMusic();
+            }, 2600);
             
             // Hide loading screen
             setTimeout(() => {
