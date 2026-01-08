@@ -388,7 +388,9 @@ Dancer.prototype.update = function(prog) {
         var hx = 16 * Math.pow(Math.sin(th), 3);
         var hy = -(13 * Math.cos(th) - 5 * Math.cos(2 * th) - 2 * Math.cos(3 * th) - Math.cos(4 * th));
         var ox = Math.cos(this.angle) * dynamicRadius * 0.4, oy = Math.sin(this.angle) * dynamicRadius * 0.4;
-        this.tx = cx + ox * (1 - hp) + hx * 18 * hp; this.ty = cy + oy * (1 - hp) + hy * 18 * hp;
+        var isMobile = window.innerWidth < 768;
+        var heartScale = isMobile ? 12 : 18;
+        this.tx = cx + ox * (1 - hp) + hx * heartScale * hp; this.ty = cy + oy * (1 - hp) + hy * heartScale * hp;
         wobbleInt = 3 * (1 - hp);
     } else if (phase >= 5) { dynamicRadius = this.baseRadius * 1.5; wobbleInt = 10; }
     if (phase < 4) {
@@ -426,7 +428,7 @@ var purples = [], browns = [], sparkles = [], hearts = [], infinities = [], quot
 
 function init() {
     var isMobile = window.innerWidth < 768;
-    var mult = isMobile ? 0.15 : 1;
+    var mult = isMobile ? 0.5 : 1;
     stars = []; for (var i = 0; i < Math.floor(120 * mult); i++) stars.push(new Star());
     cosmicDust = []; for (var i = 0; i < Math.floor(80 * mult); i++) cosmicDust.push(new CosmicDust());
     nebulae = []; for (var i = 0; i < Math.floor(5 * mult); i++) nebulae.push(new Nebula(i % 2 === 0));
@@ -654,7 +656,9 @@ function playChime() {
 }
 
 function showFinal() {
-    if (finalShown) return; finalShown = true;
+    if (finalShown) return; 
+    if (!loveTextShown) return; 
+    finalShown = true;
     ayseName.style.opacity = '0'; secret.style.opacity = '0'; finalMsg.innerHTML = '';
     var chars = finalText.split('');
     for (var i = 0; i < chars.length; i++) {
