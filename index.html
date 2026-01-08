@@ -2,1440 +2,761 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="color-scheme" content="only light">
-    <title>Sana Özel Bir Şey ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💜 Ayşe 🤎</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Great+Vibes&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow: hidden; background: #000; font-family: 'Cormorant Garamond', serif; cursor: none; }
+        #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+        #cursor {
+            position: fixed; width: 100px; height: 100px; border-radius: 50%;
+            pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(200,100,255,0.6) 0%, rgba(180,80,200,0.3) 30%, rgba(220,140,80,0.15) 50%, transparent 70%);
+            box-shadow: 0 0 60px rgba(180,100,220,0.7), 0 0 120px rgba(180,100,220,0.4), 0 0 180px rgba(200,130,100,0.2);
+            mix-blend-mode: screen;
         }
-
-        /* Force colors - prevent dark mode interference */
-        :root {
-            color-scheme: only light;
+        #cursor::before {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 10px; height: 10px; border-radius: 50%;
+            background: white; box-shadow: 0 0 20px #fff, 0 0 40px rgba(200,100,255,0.9);
         }
-
-        html, body {
-            -webkit-text-fill-color: initial;
-            forced-color-adjust: none;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            html, body, * {
-                color-scheme: only light !important;
-            }
-            .star {
-                background: #fff !important;
-                background-color: #ffffff !important;
-            }
-            .orb {
-                opacity: 1 !important;
-            }
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Starfield background */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        #intro {
+            position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            font-weight: 300; letter-spacing: 4px; text-transform: lowercase;
+            color: rgba(255,255,255,0.9); z-index: 100;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            transition: opacity 1.5s ease;
+            padding: 12px 25px;
+            background: transparent;
             pointer-events: none;
-            z-index: 0;
         }
-
-        .star {
-            position: absolute;
-            background: #fff !important;
-            background-color: #fff !important;
-            border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
-            -webkit-filter: none !important;
-            filter: none !important;
+        #intro.fade-out { opacity: 0; }
+        #ayse-name {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.7);
+            font-family: 'Great Vibes', cursive; font-size: clamp(7rem, 22vw, 18rem);
+            z-index: 100; pointer-events: none; opacity: 0;
+            background: linear-gradient(135deg, #e040fb 0%, #d500f9 20%, #aa00ff 40%, #7c4dff 60%, #d2691e 80%, #ff8a65 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            filter: blur(30px); text-shadow: 0 0 120px rgba(200,100,255,0.95);
+            transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
+        #ayse-name.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
+        #final-box {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; z-index: 200; opacity: 0; pointer-events: none;
+            max-width: 92vw; transition: all 3.5s ease;
         }
-
-        /* Floating orbs - more premium */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            filter: blur(80px);
-        }
-
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(233, 69, 96, 0.3) 0%, transparent 70%);
-            top: -200px;
-            right: -150px;
-            animation: orbFloat1 30s ease-in-out infinite;
-        }
-
-        .orb-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.25) 0%, transparent 70%);
-            bottom: -150px;
-            left: -100px;
-            animation: orbFloat2 35s ease-in-out infinite;
-        }
-
-        .orb-3 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(240, 147, 251, 0.2) 0%, transparent 70%);
-            top: 40%;
-            left: 10%;
-            animation: orbFloat3 25s ease-in-out infinite;
-        }
-
-        .orb-4 {
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(255, 200, 150, 0.2) 0%, transparent 70%);
-            top: 20%;
-            right: 10%;
-            animation: orbFloat1 28s ease-in-out infinite reverse;
-        }
-
-        @keyframes orbFloat1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(40px, -50px) scale(1.1); }
-            50% { transform: translate(-30px, 30px) scale(0.9); }
-            75% { transform: translate(50px, 40px) scale(1.05); }
-        }
-
-        @keyframes orbFloat2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-50px, -40px) scale(1.1); }
-            66% { transform: translate(40px, 50px) scale(0.9); }
-        }
-
-        @keyframes orbFloat3 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(60px, -60px); }
-        }
-
-        /* Screen transitions */
-        .screen {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(40px) scale(0.95);
-            z-index: 1;
-        }
-
-        .screen.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
-
-        .screen.fade-out {
-            opacity: 0;
-            transform: translateY(-40px) scale(0.95);
-        }
-
-        .text-container {
+        #final-box.visible { opacity: 1; }
+        .final-msg {
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.8vw, 2rem);
+            line-height: 2.2; color: #fff; padding: 45px 55px;
+            background: rgba(0,0,0,0.92);
+            border-radius: 20px;
+            border: 2px solid rgba(200,100,255,0.5);
+            box-shadow: 0 0 80px rgba(180,100,220,0.6);
+            white-space: pre-line;
             text-align: center;
-            max-width: 380px;
-        }
-
-        .main-text {
-            font-size: 1.4rem;
-            line-height: 2;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .intro-text {
-            font-size: 1.25rem;
-            line-height: 2.2;
-            color: rgba(255, 255, 255, 0.85);
+            max-width: 520px;
             font-weight: 300;
         }
-
-        .subtle-text {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 2rem;
-            font-weight: 300;
+        @media (max-width: 600px) {
+            .final-msg { padding: 20px 25px; font-size: 1.1rem; line-height: 1.8; max-width: 90vw; }
+            #cursor { display: none; }
+            body { cursor: auto; }
+            #phase-dots { bottom: 70px; gap: 10px; }
+            #progress { bottom: 20px; width: 180px; }
+            #hint { bottom: 40px; font-size: 0.75rem; letter-spacing: 3px; }
         }
-
-        .highlight {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 600;
+        .letter { display: inline-block; opacity: 0; transform: translateY(50px) rotateX(90deg); animation: letterIn 1s ease forwards; }
+        @keyframes letterIn { to { opacity: 1; transform: translateY(0) rotateX(0deg); } }
+        .letter.purple { color: #e879f9; text-shadow: 0 0 15px #e040fb; font-weight: 600; }
+        .letter.brown { color: #fdba74; text-shadow: 0 0 15px #ff8a65; font-weight: 600; }
+        #hint {
+            position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);
+            font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-weight: 300;
+            letter-spacing: 6px; color: rgba(200,150,255,0.5); z-index: 100;
+            font-style: italic; text-shadow: 0 0 25px rgba(180,100,220,0.7);
         }
-
-        /* Premium Buttons */
-        .button-container {
-            margin-top: 2.5rem;
+        #progress {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: 220px; height: 4px; background: rgba(255,255,255,0.08);
+            border-radius: 2px; z-index: 100; overflow: hidden;
+            box-shadow: 0 0 20px rgba(180,100,220,0.3);
         }
-
-        .button-row {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+        #progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #aa00ff, #e040fb, #ff8a65, #d2691e);
+            box-shadow: 0 0 15px rgba(200,100,255,0.8);
         }
-
-        .btn {
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-family: inherit;
-            font-weight: 500;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-
-        .btn:active {
-            transform: translateY(-2px) scale(0.98);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-            background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
-        }
-
-        .btn-small {
-            padding: 0.85rem 1.8rem;
-            font-size: 0.95rem;
-        }
-
-        /* Progress dots */
-        .progress-dots {
-            position: fixed;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 100;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .dot.active {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            transform: scale(1.5);
-            box-shadow: 0 0 20px rgba(240, 147, 251, 0.6);
-        }
-
-        .dot.completed {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Quiz options - Premium */
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-            margin-top: 2rem;
-            width: 100%;
-            max-width: 320px;
-        }
-
-        .quiz-btn {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.1rem 1.4rem;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: rgba(255, 255, 255, 0.9);
-            font-family: inherit;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: left;
-        }
-
-        .quiz-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateX(8px);
-            border-color: rgba(240, 147, 251, 0.4);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .quiz-btn .letter {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(240, 147, 251, 0.3) 0%, rgba(245, 87, 108, 0.3) 100%);
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-
-        /* Card - Premium glassmorphism */
-        .card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: 28px;
-            padding: 2.5rem 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 340px;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        }
-
-        .card h3 {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        .card ul {
-            list-style: none;
-        }
-
-        .card li {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.85);
-            padding: 0.9rem 0;
-            padding-left: 1.8rem;
-            position: relative;
-            line-height: 1.6;
-            opacity: 0;
-            transform: translateX(-20px);
-            animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .card li::before {
-            content: '✦';
-            position: absolute;
-            left: 0;
-            color: #f093fb;
-            font-size: 0.7rem;
-        }
-
-        .card li:nth-child(1) { animation-delay: 0.2s; }
-        .card li:nth-child(2) { animation-delay: 0.35s; }
-        .card li:nth-child(3) { animation-delay: 0.5s; }
-        .card li:nth-child(4) { animation-delay: 0.65s; }
-        .card li:nth-child(5) { animation-delay: 0.8s; }
-
-        @keyframes slideIn {
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Special name reveal */
-        .special-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #667eea 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 1.5rem 0;
-            animation: nameReveal 1.5s ease-out, glow 3s ease-in-out infinite;
-        }
-
-        @keyframes nameReveal {
-            0% { opacity: 0; transform: scale(0.5) translateY(30px); filter: blur(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 30px rgba(240, 147, 251, 0.4)); }
-            50% { filter: drop-shadow(0 0 50px rgba(240, 147, 251, 0.7)); }
-        }
-
-        .pre-reveal-text {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 0.5rem;
-        }
-
-        .post-reveal-text {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-        }
-
-        /* Escape button - BIGGER messages */
-        .escape-btn-container {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            align-items: flex-start;
-            margin-top: 2rem;
-            min-height: 150px;
-            position: relative;
-            width: 100%;
-            max-width: 380px;
-        }
-
-        .escape-btn {
-            position: absolute;
-            left: 55%;
-            top: 0;
-            transition: none !important;
-            z-index: 10;
-            touch-action: none;
-        }
-
-        .static-btn {
-            position: absolute;
-            left: 5%;
-            top: 0;
-            z-index: 5;
-        }
-
-        .escape-message {
-            margin-top: 5rem;
-            font-size: 1.4rem;
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: 500;
-            min-height: 2rem;
-            opacity: 0;
-            transform: translateY(10px) scale(0.9);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .escape-message.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Typing effect */
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.3em;
-            background: rgba(255, 255, 255, 0.7);
-            margin-left: 3px;
-            animation: blink 0.8s infinite;
-            vertical-align: text-bottom;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Delayed button appearance */
-        .delayed-btn {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .delayed-btn.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Final reveal */
-        .final-container {
-            text-align: center;
-            transition: all 0.5s ease;
-        }
-
-        .final-message {
-            font-size: 1.3rem;
-            line-height: 2;
-            color: rgba(255, 255, 255, 0.9);
-            transition: all 0.5s ease;
-        }
-
-        .final-reveal {
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .final-reveal.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .final-reveal .big-heart {
-            font-size: 6rem;
-            animation: heartBeat 1s ease-in-out infinite;
-            display: inline-block;
-            filter: drop-shadow(0 0 40px rgba(255, 100, 150, 0.8));
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.15); }
-            50% { transform: scale(1); }
-            75% { transform: scale(1.2); }
-        }
-
-        .final-reveal .love-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-top: 1.5rem;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow: 0 2px 30px rgba(240, 147, 251, 0.5);
-        }
-
-        /* Confetti */
-        .confetti {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1000;
-            border-radius: 3px;
-            animation: confettiFall 4s ease-out forwards;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(1080deg);
-                opacity: 0;
-            }
-        }
-
-        /* Sparkle container */
-        .sparkle-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .sparkle-container.show {
-            opacity: 1;
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #fff;
-            border-radius: 50%;
-            animation: sparkle 3s infinite;
-            box-shadow: 0 0 10px #f093fb, 0 0 20px #f093fb;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-
-        /* Reaction popup */
-        .reaction {
-            position: fixed;
-            font-size: 2.5rem;
-            pointer-events: none;
-            z-index: 1000;
-            animation: reactionFloat 2s ease-out forwards;
-        }
-
-        @keyframes reactionFloat {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
-        }
-
-        /* Loading screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-emoji {
-            font-size: 3rem;
-            animation: bounce 1s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .loading-text {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        .loading-bar-container {
-            width: 180px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .loading-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #f093fb, #f5576c);
-            border-radius: 4px;
-            animation: loadingProgress 1.5s ease-out forwards;
-        }
-
-        @keyframes loadingProgress {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
+        #phase-dots { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(180,100,220,0.2); transition: all 0.6s ease; box-shadow: 0 0 10px rgba(180,100,220,0.3); }
+        .dot.active { background: radial-gradient(circle, #fff 0%, #e040fb 50%, #aa00ff 100%); box-shadow: 0 0 25px #e040fb, 0 0 50px rgba(180,100,220,0.7); transform: scale(1.6); }
+        .dot.done { background: linear-gradient(135deg, #aa00ff, #d2691e); box-shadow: 0 0 15px rgba(180,100,220,0.5); }
     </style>
 </head>
 <body>
-    <!-- Background Music -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="atmospheric-background-179503.mp3" type="audio/mpeg">
-    </audio>
+    <canvas id="canvas"></canvas>
+    <div id="cursor"></div>
+    <div id="intro">basılı tut ve sürükle</div>
+    <div id="ayse-name">Ayşe</div>
+    <div id="secret"></div>
+    <div id="final-box"><div class="final-msg" id="final-msg"></div></div>
+    <div id="hint">parmağını sürüklemeye devam et</div>
+    <div id="progress"><div id="progress-bar"></div></div>
+    <div id="phase-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+<script>
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var cursor = document.getElementById('cursor');
+var intro = document.getElementById('intro');
+var ayseName = document.getElementById('ayse-name');
+var secret = document.getElementById('secret');
+var finalBox = document.getElementById('final-box');
+var finalMsg = document.getElementById('final-msg');
+var hintEl = document.getElementById('hint');
+var progressBar = document.getElementById('progress-bar');
+var dots = document.querySelectorAll('.dot');
 
-    <!-- Loading screen -->
-    <div class="loading-screen" id="loading">
-        <div class="loading-emoji">💜</div>
-        <p class="loading-text">Bi saniye, sana özel bi şey geliyo...</p>
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
-        </div>
-    </div>
+var W, H, cx, cy;
+var mx = 0, my = 0, tmx = 0, tmy = 0;
+var t = 0, count = 0, phase = 0, pulse = 0, beat = 0;
+var started = false, nameShown = false, finalShown = false;
+var heartFrozen = false, textMode = false, loveTextShown = false;
+var audioCtx = null;
+var bgMusic = null;
 
-    <!-- Stars -->
-    <div class="stars" id="stars"></div>
+var quotes = ["seni düşünüyorum", "her gün", "seninle tanışmak istiyorum", "seni çok merak ediyorum", "kalbimdesin"];
+var finalText = "Ayşe,\n\nGözlerini gördüm, çok tatlıydı.\nSesini duymak için sabırsızlanıyorum.\n\nEn sevdiğim renk kahverengi,\nsenin için mor oldu.\n\nMor senin, kahverengi benim.";
+var THRESHOLDS = [0, 25, 60, 100, 150, 200, 250];
 
-    <!-- Floating orbs -->
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
+function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; cx = W/2; cy = H/2; }
+addEventListener('resize', resize); resize();
 
-    <!-- Progress dots -->
-    <div class="progress-dots" id="progress">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </div>
+// STAR
+function Star() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.size = Math.random() * 2 + 0.5; this.twinkle = Math.random() * Math.PI * 2;
+    this.speed = 0.02 + Math.random() * 0.05;
+}
+Star.prototype.update = function() { this.twinkle += this.speed; };
+Star.prototype.draw = function() {
+    var alpha = 0.4 + Math.sin(this.twinkle) * 0.5;
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, ' + alpha + ')';
+    ctx.shadowColor = '#fff'; ctx.shadowBlur = 8; ctx.fill(); ctx.shadowBlur = 0;
+};
 
-    <!-- Screen 0: Intro -->
-    <div class="screen active" id="screen-0">
-        <div class="text-container">
-            <p class="intro-text">
-                Sana özel bi şey hazırladım 💜<br>
-                Sadece seninle paylaşmak istedim.
-            </p>
-            <p class="subtle-text">birkaç dakikanı al, söz kısa sürecek ✨</p>
-            <div class="button-container">
-                <button class="btn btn-primary" onclick="playClick(); goToScreen(1)">Başlayalım</button>
-            </div>
-        </div>
-    </div>
+// SHOOTING STAR
+function ShootingStar() { this.active = false; }
+ShootingStar.prototype.launch = function() {
+    this.active = true; this.x = Math.random() * W * 0.8; this.y = Math.random() * H * 0.3;
+    this.length = 150 + Math.random() * 200; this.speed = 20 + Math.random() * 18;
+    this.angle = Math.PI / 4 + (Math.random() - 0.5) * 0.5; this.life = 1; this.thickness = 2.5 + Math.random() * 3;
+};
+ShootingStar.prototype.update = function() {
+    if (!this.active) return;
+    this.x += Math.cos(this.angle) * this.speed; this.y += Math.sin(this.angle) * this.speed;
+    this.life -= 0.01; if (this.life <= 0) this.active = false;
+};
+ShootingStar.prototype.draw = function() {
+    if (!this.active) return;
+    var tx = this.x - Math.cos(this.angle) * this.length, ty = this.y - Math.sin(this.angle) * this.length;
+    var g = ctx.createLinearGradient(tx, ty, this.x, this.y);
+    g.addColorStop(0, 'transparent'); g.addColorStop(0.4, 'rgba(200, 150, 255, ' + (this.life * 0.2) + ')');
+    g.addColorStop(0.8, 'rgba(255, 255, 255, ' + (this.life * 0.6) + ')'); g.addColorStop(1, 'rgba(255, 255, 255, ' + this.life + ')');
+    ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(this.x, this.y);
+    ctx.strokeStyle = g; ctx.lineWidth = this.thickness; ctx.lineCap = 'round'; ctx.stroke();
+    ctx.beginPath(); ctx.arc(this.x, this.y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, ' + this.life + ')'; ctx.shadowColor = '#fff'; ctx.shadowBlur = 40; ctx.fill(); ctx.shadowBlur = 0;
+};
 
-    <!-- Screen 1: Gülümseme -->
-    <div class="screen" id="screen-1">
-        <div class="text-container">
-            <p class="main-text">
-                Bazı insanlar mesaj yazarken<br>bile gülümsetir.
-            </p>
-            <div class="button-container">
-                <div class="button-row">
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(1, 'Doğru'); showReaction(event, '😊'); goToScreen(2)">Doğru</button>
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(1, 'Kesinliklee'); showReaction(event, '✨'); goToScreen(2)">Kesinliklee</button>
-                </div>
-            </div>
-        </div>
-    </div>
+// FIREFLY
+function Firefly() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 2; this.vy = (Math.random() - 0.5) * 2;
+    this.size = 2 + Math.random() * 4; this.glowPhase = Math.random() * Math.PI * 2;
+    this.isPurple = Math.random() > 0.4;
+}
+Firefly.prototype.update = function() {
+    this.vx += (Math.random() - 0.5) * 0.2; this.vy += (Math.random() - 0.5) * 0.2;
+    this.vx *= 0.95; this.vy *= 0.95; this.x += this.vx; this.y += this.vy; this.glowPhase += 0.07;
+    if (this.x < 0) this.x = W; if (this.x > W) this.x = 0; if (this.y < 0) this.y = H; if (this.y > H) this.y = 0;
+};
+Firefly.prototype.draw = function() {
+    var glow = (Math.sin(this.glowPhase) + 1) / 2;
+    var clr = this.isPurple ? {r:200,g:100,b:255} : {r:255,g:180,b:100};
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.size * glow + 1, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(' + clr.r + ',' + clr.g + ',' + clr.b + ',' + (glow * 0.95) + ')';
+    ctx.shadowColor = 'rgb(' + clr.r + ',' + clr.g + ',' + clr.b + ')'; ctx.shadowBlur = 25 * glow; ctx.fill(); ctx.shadowBlur = 0;
+};
 
-    <!-- Screen 2: Zaman -->
-    <div class="screen" id="screen-2">
-        <div class="text-container">
-            <p class="main-text">
-                Birini düşünürken zamanın<br><span class="highlight">yavaşladığını</span> fark ettin mi?
-            </p>
-            <div class="button-container">
-                <button class="btn" onclick="playClick(); saveAnswer(2, 'Bazen oluyo'); goToScreen(3)">Bazen oluyo</button>
-            </div>
-        </div>
-    </div>
+// GALAXY ARM
+function GalaxyArm(armIdx, total) {
+    this.baseAngle = (armIdx / total) * Math.PI * 2; this.particles = [];
+    for (var i = 0; i < 100; i++) {
+        this.particles.push({ dist: 30 + i * 4 + Math.random() * 30, angleOff: Math.random() * 0.7, size: 1 + Math.random() * 3, bright: 0.2 + Math.random() * 0.7, isPurple: armIdx % 2 === 0 });
+    }
+}
+GalaxyArm.prototype.draw = function(rot, intensity) {
+    for (var i = 0; i < this.particles.length; i++) {
+        var p = this.particles[i];
+        var spiralAng = this.baseAngle + rot + p.dist * 0.015 + p.angleOff;
+        var x = cx + Math.cos(spiralAng) * p.dist, y = cy + Math.sin(spiralAng) * p.dist;
+        var alpha = p.bright * intensity * (1 - p.dist / 450);
+        if (alpha > 0.02) {
+            var hue = p.isPurple ? 280 + Math.random() * 30 : 25 + Math.random() * 25;
+            ctx.beginPath(); ctx.arc(x, y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = 'hsla(' + hue + ', 90%, 65%, ' + alpha + ')';
+            ctx.shadowColor = 'hsla(' + hue + ', 90%, 65%, 0.5)'; ctx.shadowBlur = 10; ctx.fill(); ctx.shadowBlur = 0;
+        }
+    }
+};
 
-    <!-- Screen 3: Bildirim -->
-    <div class="screen" id="screen-3">
-        <div class="text-container">
-            <p class="main-text">
-                Telefonuna bildirim gelince<br>kimin mesajını umarsın?
-            </p>
-            <div class="quiz-options">
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(3, 'Arkadaşlar'); goToScreen(4)">
-                    <span class="letter">A</span>
-                    <span>Arkadaşlar</span>
-                </button>
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(3, 'Belli biri var 👀'); showReaction(event, '💫'); goToScreen(4)">
-                    <span class="letter">B</span>
-                    <span>Belli biri var 👀</span>
-                </button>
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(3, 'Sessizde duruyo'); goToScreen(4)">
-                    <span class="letter">C</span>
-                    <span>Sessizde duruyo zaten</span>
-                </button>
-            </div>
-        </div>
-    </div>
+// AURORA WAVE
+function AuroraWave(idx) { this.idx = idx; this.yOffset = (idx - 1) * 150; this.isPurple = idx % 2 === 0; }
+AuroraWave.prototype.draw = function(intensity) {
+    var baseY = cy + this.yOffset + Math.sin(t * 0.0006 + this.idx) * 100;
+    ctx.save(); ctx.globalAlpha = intensity * 0.35;
+    var g = ctx.createLinearGradient(0, baseY - 120, 0, baseY + 120);
+    if (this.isPurple) { g.addColorStop(0, 'transparent'); g.addColorStop(0.35, 'rgba(180, 100, 220, 0.25)'); g.addColorStop(0.5, 'rgba(200, 100, 255, 0.45)'); g.addColorStop(0.65, 'rgba(180, 100, 220, 0.25)'); g.addColorStop(1, 'transparent'); }
+    else { g.addColorStop(0, 'transparent'); g.addColorStop(0.35, 'rgba(200, 130, 80, 0.2)'); g.addColorStop(0.5, 'rgba(220, 140, 80, 0.35)'); g.addColorStop(0.65, 'rgba(200, 130, 80, 0.2)'); g.addColorStop(1, 'transparent'); }
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, baseY);
+    for (var x = 0; x <= W; x += 6) { var y = baseY + Math.sin(x * 0.006 + t * 0.002 + this.idx * 2) * 60 + Math.sin(x * 0.002 + t * 0.0008) * 40; ctx.lineTo(x, y); }
+    ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill(); ctx.restore();
+};
 
-    <!-- Screen 4: Gülümseme -->
-    <div class="screen" id="screen-4">
-        <div class="text-container">
-            <p class="main-text">
-                Son zamanlarda <span class="highlight">beklenmedik bi şey</span><br>seni gülümsetti mi?
-            </p>
-            <div class="button-container">
-                <div class="button-row">
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(4, 'Evett'); showReaction(event, '🥰'); goToScreen(5)">Evett</button>
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(4, 'Belki birazdan'); goToScreen(5)">Belki birazdan</button>
-                </div>
-            </div>
-        </div>
-    </div>
+// COSMIC DUST
+function CosmicDust() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.z = Math.random() * 3 + 1; this.size = Math.random() * 2.5 + 0.5;
+    this.speed = 0.3 + Math.random() * 0.4; this.angle = Math.random() * Math.PI * 2;
+    this.twinkle = Math.random() * Math.PI * 2;
+    this.color = Math.random() > 0.5 ? 'hsla(' + (280 + Math.random()*35) + ', 85%, 70%, ' : 'hsla(' + (20 + Math.random()*20) + ', 75%, 60%, ';
+}
+CosmicDust.prototype.update = function() {
+    this.angle += 0.003; this.x += Math.cos(this.angle) * this.speed;
+    this.y += Math.sin(this.angle * 0.7) * this.speed * 0.5; this.twinkle += 0.04;
+    if (this.x < -10) this.x = W + 10; if (this.x > W + 10) this.x = -10;
+    if (this.y < -10) this.y = H + 10; if (this.y > H + 10) this.y = -10;
+};
+CosmicDust.prototype.draw = function() {
+    var alpha = (0.4 + Math.sin(this.twinkle) * 0.4) / this.z;
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.size / this.z, 0, Math.PI * 2);
+    ctx.fillStyle = this.color + alpha + ')'; ctx.fill();
+};
 
-    <!-- Screen 5: Gece -->
-    <div class="screen" id="screen-5">
-        <div class="text-container">
-            <p class="main-text">
-                Gece yatmadan önce<br>son düşündüğün şey ne oluyo?
-            </p>
-            <div class="quiz-options">
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(5, 'Yarınki işler'); goToScreen(6)">
-                    <span class="letter">A</span>
-                    <span>Yarınki işler</span>
-                </button>
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(5, 'Birisi 🌙'); showReaction(event, '🌙'); goToScreen(6)">
-                    <span class="letter">B</span>
-                    <span>Birisi 🌙</span>
-                </button>
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(5, 'Rastgele şeyler'); goToScreen(6)">
-                    <span class="letter">C</span>
-                    <span>Rastgele şeyler</span>
-                </button>
-            </div>
-        </div>
-    </div>
+// NEBULA
+function Nebula(isPurple) {
+    this.isPurple = isPurple; this.x = Math.random() * W; this.y = Math.random() * H;
+    this.radius = 250 + Math.random() * 350; this.angle = Math.random() * Math.PI * 2;
+    this.speed = 0.0002 + Math.random() * 0.0003; this.pulseOffset = Math.random() * Math.PI * 2;
+}
+Nebula.prototype.update = function() { this.angle += this.speed; this.x = cx + Math.cos(this.angle) * W * 0.45; this.y = cy + Math.sin(this.angle * 0.6) * H * 0.4; };
+Nebula.prototype.draw = function(intensity) {
+    var pls = Math.sin(t * 0.0006 + this.pulseOffset) * 0.5 + 0.5;
+    var alpha = intensity * pls * 0.2;
+    var g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+    if (this.isPurple) { g.addColorStop(0, 'rgba(200, 100, 255, ' + alpha + ')'); g.addColorStop(0.25, 'rgba(150, 50, 200, ' + (alpha * 0.7) + ')'); g.addColorStop(0.5, 'rgba(100, 30, 150, ' + (alpha * 0.4) + ')'); }
+    else { g.addColorStop(0, 'rgba(220, 140, 80, ' + alpha + ')'); g.addColorStop(0.25, 'rgba(180, 100, 50, ' + (alpha * 0.7) + ')'); g.addColorStop(0.5, 'rgba(140, 70, 30, ' + (alpha * 0.4) + ')'); }
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fill();
+};
 
-    <!-- Screen 6: Yeni soru - Mutluluk -->
-    <div class="screen" id="screen-6">
-        <div class="text-container">
-            <p class="main-text">
-                Seni en çok ne <span class="highlight">mutlu eder</span>?
-            </p>
-            <div class="quiz-options">
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(6, 'Beklenmedik mesajlar'); goToScreen(7)">
-                    <span class="letter">A</span>
-                    <span>Beklenmedik mesajlar</span>
-                </button>
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(6, 'Küçük sürprizler'); showReaction(event, '🎁'); goToScreen(7)">
-                    <span class="letter">B</span>
-                    <span>Küçük sürprizler</span>
-                </button>
-                <button class="quiz-btn" onclick="playClick(); saveAnswer(6, 'Birinin beni düşünmesi'); goToScreen(7)">
-                    <span class="letter">C</span>
-                    <span>Birinin beni düşünmesi</span>
-                </button>
-            </div>
-        </div>
-    </div>
+// MAGIC ORB
+function MagicOrb(isPurple) { this.isPurple = isPurple; this.reset(); }
+MagicOrb.prototype.reset = function() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 1; this.vy = (Math.random() - 0.5) * 1;
+    this.size = 5 + Math.random() * 8; this.glowSize = this.size * 14;
+    this.pulseOffset = Math.random() * Math.PI * 2; this.haloRot = Math.random() * Math.PI * 2;
+};
+MagicOrb.prototype.update = function() {
+    this.vx += (Math.random() - 0.5) * 0.06; this.vy += (Math.random() - 0.5) * 0.06;
+    this.vx *= 0.97; this.vy *= 0.97;
+    var dx = mx - this.x, dy = my - this.y, dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 350 && dist > 0) { this.vx += (dx / dist) * 0.12; this.vy += (dy / dist) * 0.12; }
+    this.x += this.vx; this.y += this.vy; this.haloRot += 0.02;
+    if (this.x < -80) this.x = W + 80; if (this.x > W + 80) this.x = -80;
+    if (this.y < -80) this.y = H + 80; if (this.y > H + 80) this.y = -80;
+};
+MagicOrb.prototype.draw = function(alpha) {
+    var pls = Math.sin(t * 0.003 + this.pulseOffset) * 0.5 + 0.5, fa = alpha * pls;
+    var clr = this.isPurple ? {r:200,g:100,b:255} : {r:220,g:140,b:80};
+    var g1 = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.glowSize);
+    g1.addColorStop(0, 'rgba(' + clr.r + ',' + clr.g + ',' + clr.b + ',' + (fa * 0.9) + ')');
+    g1.addColorStop(0.3, 'rgba(' + clr.r + ',' + clr.g + ',' + clr.b + ',' + (fa * 0.4) + ')');
+    g1.addColorStop(0.6, 'rgba(' + clr.r + ',' + clr.g + ',' + clr.b + ',' + (fa * 0.1) + ')');
+    g1.addColorStop(1, 'transparent');
+    ctx.fillStyle = g1; ctx.beginPath(); ctx.arc(this.x, this.y, this.glowSize, 0, Math.PI * 2); ctx.fill();
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.haloRot);
+    ctx.strokeStyle = 'rgba(' + clr.r + ',' + clr.g + ',' + clr.b + ',' + (fa * 0.4) + ')';
+    ctx.lineWidth = 1.5; ctx.beginPath(); ctx.ellipse(0, 0, this.size * 5, this.size * 2, 0, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+    var g2 = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+    g2.addColorStop(0, 'rgba(255,255,255,' + fa + ')');
+    g2.addColorStop(0.5, 'rgba(' + clr.r + ',' + clr.g + ',' + clr.b + ',' + fa + ')');
+    g2.addColorStop(1, 'rgba(' + clr.r + ',' + clr.g + ',' + clr.b + ',0)');
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+};
 
-    <!-- Screen 7: Yeni soru - Hissetmek -->
-    <div class="screen" id="screen-7">
-        <div class="text-container">
-            <p class="main-text">
-                Birinin seni <span class="highlight">düşündüğünü</span><br>hissettiğin oldu mu?
-            </p>
-            <div class="button-container">
-                <div class="button-row">
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(7, 'Bazen oluyo'); goToScreen(8)">Bazen oluyo</button>
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(7, 'Şu an oldu gibi'); showReaction(event, '💜'); goToScreen(8)">Şu an oldu gibi</button>
-                </div>
-            </div>
-        </div>
-    </div>
+// HEART
+function Heart(x, y, size, color, vx, vy) {
+    this.x = x; this.y = y; this.size = size; this.color = color;
+    this.vx = vx || (Math.random() - 0.5) * 7; this.vy = vy || -Math.random() * 8 - 3;
+    this.rotation = Math.random() * Math.PI * 2; this.rotSpeed = (Math.random() - 0.5) * 0.18; this.life = 1;
+}
+Heart.prototype.update = function() { this.x += this.vx; this.y += this.vy; this.vy += 0.06; this.rotation += this.rotSpeed; this.life -= 0.007; };
+Heart.prototype.draw = function() {
+    if (this.life <= 0) return;
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation); ctx.scale(this.size, this.size);
+    ctx.globalAlpha = this.life; ctx.fillStyle = this.color; ctx.shadowColor = this.color; ctx.shadowBlur = 30;
+    ctx.beginPath(); ctx.moveTo(0, -4); ctx.bezierCurveTo(-6, -10, -12, 0, 0, 12); ctx.bezierCurveTo(12, 0, 6, -10, 0, -4); ctx.fill();
+    ctx.restore();
+};
 
-    <!-- Screen 8: Profil Kartı -->
-    <div class="screen" id="screen-8">
-        <div class="card">
-            <h3>✦ Bu profil</h3>
-            <ul>
-                <li>Detaylara dikkat ediyo</li>
-                <li>Küçük şeyleri önemsiyo</li>
-                <li>Sürpriz yapmayı seviyo</li>
-                <li>Bazen fazla düşünüyo</li>
-                <li>Ama hep iyi niyetli</li>
-            </ul>
-        </div>
-        <div class="button-container">
-            <button class="btn delayed-btn" id="profile-btn" onclick="playClick(); saveAnswer(8, 'Tanıdık geldi'); goToScreen(9)">Tanıdık geldi</button>
-        </div>
-    </div>
+// INFINITY SYMBOL
+function InfSymbol(x, y, size, color, vx, vy) {
+    this.x = x; this.y = y; this.size = size; this.color = color;
+    this.vx = vx || (Math.random() - 0.5) * 5; this.vy = vy || -Math.random() * 6 - 1;
+    this.rotation = Math.random() * Math.PI * 2; this.rotSpeed = (Math.random() - 0.5) * 0.1; this.life = 1;
+}
+InfSymbol.prototype.update = function() { this.x += this.vx; this.y += this.vy; this.vy += 0.04; this.rotation += this.rotSpeed; this.life -= 0.005; };
+InfSymbol.prototype.draw = function() {
+    if (this.life <= 0) return;
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation); ctx.scale(this.size, this.size);
+    ctx.globalAlpha = this.life; ctx.strokeStyle = this.color; ctx.shadowColor = this.color; ctx.shadowBlur = 30; ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (var i = 0; i <= Math.PI * 2; i += 0.06) {
+        var xx = 14 * Math.cos(i) / (1 + Math.sin(i) * Math.sin(i));
+        var yy = 14 * Math.sin(i) * Math.cos(i) / (1 + Math.sin(i) * Math.sin(i));
+        if (i === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+    }
+    ctx.stroke(); ctx.restore();
+};
 
-    <!-- Screen 9: Şaka Soru - Kaçan Buton -->
-    <div class="screen" id="screen-9">
-        <div class="text-container">
-            <p class="main-text">
-                <span class="highlight">Ahmet'in başka kızlarla konuşmadığına</span><br>
-                inanıyo musun?
-            </p>
-            <div class="escape-btn-container" id="escape-container">
-                <button class="btn btn-small static-btn" onclick="playClick(); saveAnswer(9, 'İnanıyorum 😇'); showReaction(event, '😇'); goToScreen(10)">İnanıyorum</button>
-                <button class="btn btn-small escape-btn" id="escape-btn" onmouseenter="escapeButton(event)" ontouchstart="escapeButton(event)" onclick="tryClickEscape(event)">İnanmıyorumm 😝</button>
-            </div>
-            <p class="escape-message" id="escape-message"></p>
-        </div>
-    </div>
+// SPARKLE
+function Sparkle(x, y) {
+    this.x = x; this.y = y; this.size = 6 + Math.random() * 9; this.life = 1;
+    this.decay = 0.012 + Math.random() * 0.01; this.vx = (Math.random() - 0.5) * 10; this.vy = (Math.random() - 0.5) * 10;
+    this.rotation = Math.random() * Math.PI * 2; this.rotSpeed = (Math.random() - 0.5) * 0.35;
+    this.isPurple = Math.random() > 0.35;
+}
+Sparkle.prototype.update = function() { this.x += this.vx; this.y += this.vy; this.vy += 0.04; this.vx *= 0.97; this.life -= this.decay; this.rotation += this.rotSpeed; };
+Sparkle.prototype.draw = function() {
+    if (this.life <= 0) return;
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation); ctx.globalAlpha = this.life;
+    var clr = this.isPurple ? '#e040fb' : '#ff8a65';
+    ctx.beginPath();
+    for (var i = 0; i < 4; i++) {
+        var ang = (i / 4) * Math.PI * 2;
+        ctx.lineTo(Math.cos(ang) * this.size, Math.sin(ang) * this.size);
+        ctx.lineTo(Math.cos(ang + Math.PI / 4) * this.size * 0.2, Math.sin(ang + Math.PI / 4) * this.size * 0.2);
+    }
+    ctx.closePath(); ctx.fillStyle = clr; ctx.shadowColor = clr; ctx.shadowBlur = 20; ctx.fill(); ctx.restore();
+};
 
-    <!-- Screen 10: Tatlı iltifat -->
-    <div class="screen" id="screen-10">
-        <div class="text-container">
-            <p class="main-text">
-                <span class="highlight">çok tatlısınnn.</span>
-            </p>
-            <div class="button-container">
-                <div class="button-row">
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(10, 'Suss 😊'); showReaction(event, '😊'); goToScreen(11)">Suss</button>
-                    <button class="btn btn-small" onclick="playClick(); saveAnswer(10, 'Dur ya 🙈'); showReaction(event, '🙈'); goToScreen(11)">Dur ya</button>
-                </div>
-            </div>
-        </div>
-    </div>
+// DANCER
+function Dancer(isPurple, i, n) {
+    this.isPurple = isPurple; this.i = i; this.n = n;
+    this.angle = (i / n) * Math.PI * 2; this.radius = 100 + Math.random() * 250; this.baseRadius = this.radius;
+    this.speed = 0.0004 + Math.random() * 0.0008; this.wobble = Math.random() * Math.PI * 2;
+    this.wobbleSpeed = 0.0015 + Math.random() * 0.002; this.size = 3 + Math.random() * 6; this.baseSize = this.size;
+    this.pulseOffset = Math.random() * Math.PI * 2;
+    this.x = cx + Math.cos(this.angle) * this.radius; this.y = cy + Math.sin(this.angle) * this.radius;
+    this.tx = this.x; this.ty = this.y; this.trail = []; this.textTarget = null;
+    if (isPurple) { this.hue = 275 + Math.random() * 35; this.sat = 85 + Math.random() * 15; this.lit = 60 + Math.random() * 25; }
+    else { this.hue = 18 + Math.random() * 25; this.sat = 75 + Math.random() * 20; this.lit = 55 + Math.random() * 25; }
+}
+Dancer.prototype.update = function(prog) {
+    if (this.trail.length >= 12) this.trail.shift();
+    this.trail.push({ x: this.x, y: this.y, size: this.size });
+    if (textMode && this.textTarget) {
+        this.tx = this.textTarget.x; this.ty = this.textTarget.y;
+        this.x += (this.tx - this.x) * 0.04; this.y += (this.ty - this.y) * 0.04;
+        return;
+    }
+    if (heartFrozen) return;
+    var dir = this.isPurple ? 1 : -1;
+    this.angle += this.speed * dir; this.wobble += this.wobbleSpeed;
+    var dynamicRadius = this.baseRadius, wobbleInt = 20;
+    if (phase <= 1) { dynamicRadius = this.baseRadius + Math.sin(t * 0.0004 + this.pulseOffset) * 40; wobbleInt = 18; }
+    else if (phase === 2) { var pp = Math.min(1, (prog - 0.14) / 0.16); dynamicRadius = this.baseRadius * (1 - pp * 0.35); wobbleInt = 25 + pp * 25; }
+    else if (phase === 3) { dynamicRadius = this.baseRadius * 0.55 + Math.sin(t * 0.0008) * 55; wobbleInt = 45; }
+    else if (phase === 4) {
+        var hp = Math.min(1, (prog - 0.52) / 0.16), th = this.angle;
+        var hx = 16 * Math.pow(Math.sin(th), 3);
+        var hy = -(13 * Math.cos(th) - 5 * Math.cos(2 * th) - 2 * Math.cos(3 * th) - Math.cos(4 * th));
+        var ox = Math.cos(this.angle) * dynamicRadius * 0.4, oy = Math.sin(this.angle) * dynamicRadius * 0.4;
+        this.tx = cx + ox * (1 - hp) + hx * 18 * hp; this.ty = cy + oy * (1 - hp) + hy * 18 * hp;
+        wobbleInt = 3 * (1 - hp);
+    } else if (phase >= 5) { dynamicRadius = this.baseRadius * 1.5; wobbleInt = 10; }
+    if (phase < 4) {
+        var wx = Math.sin(this.wobble) * wobbleInt, wy = Math.cos(this.wobble * 1.3) * wobbleInt;
+        this.tx = cx + Math.cos(this.angle) * dynamicRadius + wx; this.ty = cy + Math.sin(this.angle) * dynamicRadius + wy;
+    }
+    var easing = phase >= 4 ? 0.025 : 0.045;
+    this.x += (this.tx - this.x) * easing; this.y += (this.ty - this.y) * easing;
+    this.size = this.baseSize + Math.sin(t * 0.003 + this.pulseOffset) * 3 + pulse * 6 + beat * 5;
+};
+Dancer.prototype.draw = function(prog) {
+    var alpha = 0.95;
+    var drawSize = textMode ? 2 : this.size;
+    if (!this.isPurple) { if (phase < 2) alpha = 0.04 + prog * 0.35; else alpha = Math.min(0.95, 0.3 + prog * 0.6); }
+    if (!textMode) {
+        for (var i = 0; i < this.trail.length; i++) {
+            var p = this.trail[i], trailProg = i / this.trail.length;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size * trailProg * 0.5, 0, Math.PI * 2);
+            ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + this.lit + '%,' + (trailProg * alpha * 0.4) + ')'; ctx.fill();
+        }
+    }
+    ctx.beginPath(); ctx.arc(this.x, this.y, drawSize, 0, Math.PI * 2);
+    ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,' + (this.lit + 35) + '%,' + alpha + ')';
+    ctx.shadowColor = 'hsl(' + this.hue + ',' + this.sat + '%,' + this.lit + '%)'; ctx.shadowBlur = textMode ? 8 : 15; ctx.fill(); ctx.shadowBlur = 0;
+};
 
-    <!-- Screen 11: Bahane -->
-    <div class="screen" id="screen-11">
-        <div class="text-container">
-            <p class="main-text" id="twist-text"></p>
-            <div class="button-container">
-                <button class="btn btn-primary delayed-btn" id="twist-btn" onclick="playClick(); goToScreen(12)">Devam et</button>
-            </div>
-        </div>
-    </div>
+// QUOTE
+function Quote(txt, x, y) { this.txt = txt; this.x = x; this.y = y; this.alpha = 0; this.life = 0; this.maxLife = 380; }
+Quote.prototype.update = function() { this.life++; if (this.life < 55) this.alpha = Math.min(1, this.alpha + 0.022); else if (this.life > this.maxLife - 55) this.alpha = Math.max(0, this.alpha - 0.022); this.y -= 0.18; };
+Quote.prototype.draw = function() { if (this.alpha <= 0) return; ctx.save(); ctx.font = 'italic 400 clamp(18px, 2.8vw, 30px) "Cormorant Garamond", serif'; ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(220, 180, 255, ' + (this.alpha * 0.95) + ')'; ctx.shadowColor = 'rgba(200, 100, 255, 0.7)'; ctx.shadowBlur = 30; ctx.fillText(this.txt, this.x, this.y); ctx.restore(); };
+Quote.prototype.isDead = function() { return this.life >= this.maxLife; };
+// ARRAYS
+var stars = [], cosmicDust = [], nebulae = [], magicOrbs = [], shooters = [], fireflies = [], galaxyArms = [], auroraWaves = [];
+var purples = [], browns = [], sparkles = [], hearts = [], infinities = [], quoteList = [], loveParticles = [];
 
-    <!-- Screen 12: İsim Reveal -->
-    <div class="screen" id="screen-12">
-        <div class="text-container">
-            <p class="pre-reveal-text">Aslında bu oyunun tek bi sebebi var.</p>
-            <p class="special-name">Ayşe</p>
-            <p class="post-reveal-text">Sensinn.</p>
-            <div class="button-container">
-                <button class="btn delayed-btn" id="reveal-btn" onclick="playClick(); goToScreen(13)">Devam et</button>
-            </div>
-        </div>
-    </div>
+function init() {
+    var isMobile = window.innerWidth < 768;
+    var mult = isMobile ? 0.15 : 1;
+    stars = []; for (var i = 0; i < Math.floor(120 * mult); i++) stars.push(new Star());
+    cosmicDust = []; for (var i = 0; i < Math.floor(80 * mult); i++) cosmicDust.push(new CosmicDust());
+    nebulae = []; for (var i = 0; i < Math.floor(5 * mult); i++) nebulae.push(new Nebula(i % 2 === 0));
+    magicOrbs = []; for (var i = 0; i < Math.floor(30 * mult); i++) magicOrbs.push(new MagicOrb(i % 3 !== 0));
+    shooters = []; for (var i = 0; i < 3; i++) shooters.push(new ShootingStar());
+    fireflies = []; for (var i = 0; i < Math.floor(25 * mult); i++) fireflies.push(new Firefly());
+    galaxyArms = [];
+    auroraWaves = [];
+    purples = []; for (var i = 0; i < Math.floor(60 * mult); i++) purples.push(new Dancer(true, i, Math.floor(60 * mult)));
+    browns = []; for (var i = 0; i < Math.floor(50 * mult); i++) browns.push(new Dancer(false, i, Math.floor(50 * mult)));
+}
 
-    <!-- Screen 13: Final -->
-    <div class="screen" id="screen-13">
-        <div class="final-container" id="final-container">
-            <p class="final-message" id="final-message">
-                Seni mutlu etmek hoşuma gidiyo.<br>
-                <span class="highlight">O yüzden bunu yaptımm.</span>
-            </p>
-            <div class="button-container" id="final-btn-container">
-                <button class="btn btn-primary" id="final-btn" onclick="playClick(); showFinalAnimation()">Gülümsedim</button>
-            </div>
-            <div class="final-reveal" id="final-reveal"></div>
-        </div>
-    </div>
+function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
 
-    <!-- Sparkle container -->
-    <div class="sparkle-container" id="sparkles"></div>
+function playBgMusic() {
+    if (bgMusic) return;
+    bgMusic = new Audio('romantic-love-romantics-music-459475.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.3;
+    bgMusic.play().catch(function() {});
+}
 
-    <script>
-        // JSONBin.io configuration for cloud storage
-        const JSONBIN_API_KEY = '$2a$10$pQbxRcElECJCk2lPcO5IVOUXcoLFs7pJNrffs/s3ZMDLxtDN5ImFG';
-        const JSONBIN_BIN_ID = '6959def043b1c97be917ae2f';
+function playNote(freq, dur, delay, vol) {
+    if (!audioCtx) return; delay = delay || 0; vol = vol || 0.1;
+    var osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay); osc.type = 'sine';
+    gain.gain.setValueAtTime(0, audioCtx.currentTime + delay);
+    gain.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + delay + 0.05);
+    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + delay + dur);
+    osc.start(audioCtx.currentTime + delay); osc.stop(audioCtx.currentTime + delay + dur);
+}
+
+function playBeat() { playNote(55, 0.15, 0, 0.07); playNote(50, 0.12, 0.15, 0.04); }
+
+function playMelody() {
+    var melody = [[392,0.5],[440,0.5],[494,0.7],[523,0.5],[587,0.7],[659,0.5],[587,0.5],[523,1],[494,0.5],[440,0.5],[392,1.5]];
+    var delay = 0;
+    for (var i = 0; i < melody.length; i++) { playNote(melody[i][0], melody[i][1], delay, 0.12); playNote(melody[i][0] * 0.5, melody[i][1], delay, 0.04); delay += melody[i][1] * 0.8; }
+}
+
+function updatePhase() {
+    var prog = count / THRESHOLDS[THRESHOLDS.length - 1], newPhase = 0;
+    for (var i = THRESHOLDS.length - 1; i >= 0; i--) { if (count >= THRESHOLDS[i]) { newPhase = i; break; } }
+    if (newPhase !== phase) { onPhaseChange(phase, newPhase); phase = newPhase; }
+    for (var i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active', 'done');
+        if (i < phase) dots[i].classList.add('done'); else if (i === phase) dots[i].classList.add('active');
+    }
+    return prog;
+}
+
+function addQuote(txt) {
+    var isMobile = window.innerWidth < 768;
+    var xRange = isMobile ? 0.2 : 0.45;
+    var yRange = isMobile ? 0.15 : 0.3;
+    var x = cx + (Math.random() - 0.5) * W * xRange;
+    var y = cy + (Math.random() - 0.5) * H * yRange;
+    quoteList.push(new Quote(txt, x, y));
+}
+
+function onPhaseChange(oldPhase, newPhase) {
+    if (newPhase === 1) { hintEl.textContent = ''; intro.style.opacity = '0'; setTimeout(function() { addQuote(quotes[0]); }, 500); }
+    else if (newPhase === 2) { hintEl.textContent = ''; setTimeout(function() { addQuote(quotes[1]); }, 600); }
+    else if (newPhase === 3) { hintEl.textContent = ''; setTimeout(function() { addQuote(quotes[2]); }, 600); setTimeout(function() { addQuote(quotes[3]); }, 2000); }
+    else if (newPhase === 4) { hintEl.textContent = ''; setTimeout(function() { addQuote(quotes[4]); }, 600); setTimeout(revealName, 1500); }
+    else if (newPhase === 5) { hintEl.style.opacity = '0'; document.getElementById('phase-dots').style.opacity = '0'; document.getElementById('progress').style.opacity = '0'; }
+}
+
+function revealName() {
+    if (nameShown) return; nameShown = true;
+    
+    // 3 saniye bekle kalp tam oluşsun
+    setTimeout(function() {
+        heartFrozen = true;
+        playBeat();
         
-        let currentScreen = 0;
-        const totalScreens = 14;
-
-        // Answer tracking
-        const answers = {};
-        const questions = {
-            1: "Bazı insanlar mesaj yazarken bile gülümsetir",
-            2: "Birini düşünürken zamanın yavaşladığını fark ettin mi",
-            3: "Telefonuna bildirim gelince kimin mesajını umarsın",
-            4: "Beklenmedik bi şey seni gülümsetti mi",
-            5: "Gece yatmadan önce son düşündüğün şey",
-            6: "Seni en çok ne mutlu eder",
-            7: "Birinin seni düşündüğünü hissettiğin oldu mu",
-            8: "Bu profil - tanıdık geldi mi",
-            9: "Ahmet'in başka kızlarla konuşmadığına inanıyo musun",
-            10: "Çok tatlısın"
-        };
-
-        function saveAnswer(questionNum, answer) {
-            answers[questionNum] = answer;
-            localStorage.setItem('ayse_oyun_cevaplar', JSON.stringify(answers));
-            
-            // Save to cloud (JSONBin.io)
-            saveToCloud();
-        }
-
-        async function saveToCloud() {
-            try {
-                const data = {
-                    answers: answers,
-                    timestamp: new Date().toLocaleString('tr-TR'),
-                    completed: Object.keys(answers).length >= 8
-                };
-                
-                await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': JSONBIN_API_KEY
-                    },
-                    body: JSON.stringify(data)
-                });
-            } catch (e) {
-                console.log('Cloud save skipped');
-            }
-        }
-
-        async function loadFromCloud() {
-            try {
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-                    headers: {
-                        'X-Master-Key': JSONBIN_API_KEY
-                    }
-                });
-                const data = await response.json();
-                return data.record;
-            } catch (e) {
-                return null;
-            }
-        }
-
-        function getAnswers() {
-            return JSON.parse(localStorage.getItem('ayse_oyun_cevaplar') || '{}');
-        }
-
-        // Create stars
-        function createStars() {
-            const container = document.getElementById('stars');
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = (1 + Math.random() * 3) + 'px';
-                star.style.height = star.style.width;
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (2 + Math.random() * 3) + 's';
-                container.appendChild(star);
-            }
-        }
-
-        function updateProgress(screenNum) {
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((dot, index) => {
-                dot.classList.remove('active', 'completed');
-                if (index < screenNum) {
-                    dot.classList.add('completed');
-                } else if (index === screenNum) {
-                    dot.classList.add('active');
-                }
-            });
-        }
-
-        function goToScreen(screenNumber) {
-            const current = document.querySelector('.screen.active');
-            const next = document.getElementById(`screen-${screenNumber}`);
-
-            current.classList.add('fade-out');
-            
-            setTimeout(() => {
-                current.classList.remove('active', 'fade-out');
-                next.classList.add('active');
-                currentScreen = screenNumber;
-                updateProgress(screenNumber);
-
-                // Special handlers
-                if (screenNumber === 8) {
-                    setTimeout(() => {
-                        document.getElementById('profile-btn').classList.add('show');
-                    }, 1500);
-                }
-
-                if (screenNumber === 11) {
-                    typeText();
-                }
-
-                if (screenNumber === 12) {
-                    setTimeout(() => {
-                        document.getElementById('reveal-btn').classList.add('show');
-                        createRevealSparkles();
-                    }, 2000);
-                }
-            }, 500);
-        }
-
-        function typeText() {
-            const text = "Bu bi oyun gibi başladı.\nAslında küçük bi bahane.";
-            const element = document.getElementById('twist-text');
-            element.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
-            const typingSpan = element.querySelector('.typing-text');
-            
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    if (text.charAt(i) === '\n') {
-                        typingSpan.innerHTML += '<br>';
-                    } else {
-                        typingSpan.innerHTML += text.charAt(i);
-                    }
-                    i++;
-                    setTimeout(type, 50);
-                } else {
-                    element.querySelector('.typing-cursor').style.display = 'none';
-                    setTimeout(() => {
-                        document.getElementById('twist-btn').classList.add('show');
-                    }, 600);
-                }
-            }
-            setTimeout(type, 500);
-        }
-
-        function createRevealSparkles() {
-            const container = document.getElementById('sparkles');
-            container.innerHTML = '';
-            
-            for (let i = 0; i < 30; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 2 + 's';
-                sparkle.style.animationDuration = (3 + Math.random() * 2) + 's';
-                container.appendChild(sparkle);
-            }
-            container.classList.add('show');
-
-            setTimeout(() => {
-                container.classList.remove('show');
-            }, 5000);
-        }
-
-        function showReaction(event, emoji) {
-            const reaction = document.createElement('div');
-            reaction.className = 'reaction';
-            reaction.textContent = emoji;
-            reaction.style.left = event.clientX + 'px';
-            reaction.style.top = event.clientY + 'px';
-            document.body.appendChild(reaction);
-            
-            setTimeout(() => reaction.remove(), 2500);
-        }
-
-        function showFinalAnimation() {
-            const btnContainer = document.getElementById('final-btn-container');
-            const message = document.getElementById('final-message');
-            btnContainer.style.opacity = '0';
-            btnContainer.style.transform = 'scale(0.8)';
-            message.style.opacity = '0';
-            message.style.transform = 'translateY(-20px)';
-
-            document.getElementById('progress').style.opacity = '0';
-
-            createConfetti();
-
-            const sparkleContainer = document.getElementById('sparkles');
-            sparkleContainer.innerHTML = '';
-            for (let i = 0; i < 50; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 2 + 's';
-                sparkle.style.animationDuration = (2 + Math.random() * 3) + 's';
-                sparkleContainer.appendChild(sparkle);
-            }
-            sparkleContainer.classList.add('show');
-
-            setTimeout(() => {
-                const reveal = document.getElementById('final-reveal');
-                reveal.innerHTML = `
-                    <div class="big-heart">💖</div>
-                    <p class="love-text">Seninle her an güzell...</p>
-                    <p style="margin-top: 1.5rem; font-size: 1.1rem; color: rgba(255,255,255,0.8);">Bu oyunu bitirdin, ama hikaye daha yeni başlıyoo ✨</p>
-                `;
-                reveal.classList.add('show');
-            }, 1000);
-
-            setTimeout(createConfetti, 1200);
-            setTimeout(createConfetti, 2400);
-
-            // Final cloud save
-            saveToCloud();
-        }
-
-        function createConfetti() {
-            const colors = ['#f093fb', '#f5576c', '#667eea', '#764ba2', '#4facfe', '#00f2fe', '#ffecd2', '#fcb69f'];
-            for (let i = 0; i < 60; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.width = (8 + Math.random() * 12) + 'px';
-                    confetti.style.height = (8 + Math.random() * 12) + 'px';
-                    confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
-                    document.body.appendChild(confetti);
-                    
-                    setTimeout(() => confetti.remove(), 5000);
-                }, i * 25);
-            }
-        }
-
-        // Sound effects
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        // Kalp donduktan 1 saniye sonra Ayşe yazısı
+        setTimeout(function() {
+            ayseName.classList.add('visible');
+            playChime();
+        }, 1000);
         
-        function playClick() {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
+        // Ayşe göründükten 2 saniye sonra kalpler fışkırsın
+        setTimeout(function() {
+            for (var i = 0; i < 50; i++) {
+                (function(idx) {
+                    setTimeout(function() {
+                        var angle = (idx / 50) * Math.PI * 2, speed = 5 + Math.random() * 5;
+                        var color = idx % 2 === 0 ? '#e040fb' : '#ff8a65';
+                        hearts.push(new Heart(cx, cy, 0.8 + Math.random() * 0.8, color, Math.cos(angle) * speed, Math.sin(angle) * speed - 3));
+                    }, idx * 15);
+                })(i);
+            }
+            playBeat();
+        }, 3000);
+        
+        // Ayşe kaybolsun ve parçacıklar yazıya dönüşsün
+        setTimeout(function() {
+            ayseName.classList.remove('visible');
+            startTextFormation();
+        }, 4500);
+    }, 3000);
+}
 
-        function playEscape() {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 400;
-            oscillator.type = 'sawtooth';
-            
-            gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.15);
-        }
-
-        function playSuccess() {
-            [523.25, 659.25, 783.99].forEach((freq, i) => {
-                setTimeout(() => {
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    oscillator.frequency.value = freq;
-                    oscillator.type = 'sine';
-                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.2);
-                }, i * 100);
-            });
-        }
-
-        // Escape button
-        let escapeCount = 0;
-        let canClickEscape = false;
-        const escapeMessages = [
-            "Hoop! Kaçtı 😏",
-            "Ahmet iyi biri bana güven 😇",
-            "Ahmet gerçekden sadece seninle konuşmak istiyo 💜",
-            "Yakalayamazsın haha 🏃",
-            "Bi daha dene 😄",
-            "Neredeyse yakalıyodun!",
-            "Çok yavaşsın 😜",
-            "Hâlâ deniyosun ya 😂",
-            "Vazgeç artık 🙈",
-            "İnatçı çıktın sen",
-            "Tamam tamam yakaladın..."
-        ];
-
-        function escapeButton(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            playEscape();
-            
-            const btn = document.getElementById('escape-btn');
-            btn.style.position = 'fixed';
-            
-            const padding = 80;
-            const maxX = window.innerWidth - btn.offsetWidth - padding;
-            const maxY = window.innerHeight - btn.offsetHeight - padding;
-            
-            let newX = padding + Math.random() * (maxX - padding);
-            let newY = padding + Math.random() * (maxY - padding);
-            
-            btn.style.left = newX + 'px';
-            btn.style.top = newY + 'px';
-            btn.style.right = 'auto';
-            
-            const messageEl = document.getElementById('escape-message');
-            const messageIndex = Math.min(escapeCount, escapeMessages.length - 1);
-            messageEl.textContent = escapeMessages[messageIndex];
-            messageEl.classList.remove('show');
-            
-            void messageEl.offsetWidth;
-            messageEl.classList.add('show');
-            
-            escapeCount++;
-            
-            if (escapeCount >= 8) {
-                canClickEscape = true;
-                btn.style.transition = 'all 0.5s ease';
+function getTextPoints(text, fontSize, offsetX, offsetY) {
+    var tempCanvas = document.createElement('canvas');
+    tempCanvas.width = W;
+    tempCanvas.height = 300;
+    var tempCtx = tempCanvas.getContext('2d');
+    tempCtx.font = 'bold ' + fontSize + 'px Arial, sans-serif';
+    tempCtx.textAlign = 'center';
+    tempCtx.textBaseline = 'middle';
+    tempCtx.fillStyle = '#fff';
+    tempCtx.fillText(text, tempCanvas.width / 2, 150);
+    
+    var imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+    var points = [];
+    var gap = 3;
+    for (var y = 0; y < tempCanvas.height; y += gap) {
+        for (var x = 0; x < tempCanvas.width; x += gap) {
+            var idx = (y * tempCanvas.width + x) * 4;
+            if (imageData.data[idx + 3] > 128) {
+                points.push({ x: x - tempCanvas.width / 2 + offsetX, y: y - 150 + offsetY });
             }
         }
+    }
+    return points;
+}
 
-        function tryClickEscape(event) {
-            event.preventDefault();
-            if (canClickEscape) {
-                playSuccess();
-                saveAnswer(9, 'İnanıyorum 😝 (yakaladı!)');
-                showReaction(event, '🎉');
-                goToScreen(10);
-            } else {
-                escapeButton(event);
+function startTextFormation() {
+    if (loveTextShown) return;
+    loveTextShown = true;
+    textMode = true;
+    
+    var isMobile = window.innerWidth < 768;
+    var textFontSize = isMobile ? 32 : 72;
+    var points = getTextPoints("SENİ SEVİYORUM", textFontSize, cx, cy);
+    var allDancers = purples.concat(browns);
+    
+    for (var i = 0; i < allDancers.length && i < points.length; i++) {
+        allDancers[i].textTarget = { x: points[i].x, y: points[i].y };
+    }
+    
+    if (points.length > allDancers.length) {
+        for (var j = allDancers.length; j < points.length; j++) {
+            loveParticles.push(new LoveParticle(points[j].x, points[j].y, j % 2 === 0));
+        }
+    }
+    
+    // Minik kalpler
+    setTimeout(function() {
+        var heartOffset = isMobile ? 120 : 350;
+        var heartSize = isMobile ? 18 : 25;
+        createParticleHeart(cx - heartOffset, cy, heartSize, true);
+        createParticleHeart(cx + heartOffset, cy, heartSize, false);
+        playChime();
+    }, 2000);
+    
+    // Son mesaj
+    setTimeout(function() {
+        showFinal();
+    }, 5000);
+}
+
+function createParticleHeart(centerX, centerY, size, isPurple) {
+    for (var t = 0; t < Math.PI * 2; t += 0.15) {
+        var hx = 16 * Math.pow(Math.sin(t), 3);
+        var hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        var x = centerX + hx * size / 16;
+        var y = centerY + hy * size / 16;
+        loveParticles.push(new LoveParticle(x, y, isPurple));
+    }
+}
+
+function LoveParticle(tx, ty, isPurple) {
+    this.tx = tx;
+    this.ty = ty;
+    this.x = cx + (Math.random() - 0.5) * W;
+    this.y = cy + (Math.random() - 0.5) * H;
+    this.isPurple = isPurple;
+    this.size = 1.5 + Math.random() * 1;
+    this.alpha = 0;
+    this.life = 0;
+    this.maxLife = 600;
+    this.arrived = false;
+}
+LoveParticle.prototype.update = function() {
+    this.life++;
+    if (this.life < 80) {
+        this.x += (this.tx - this.x) * 0.06;
+        this.y += (this.ty - this.y) * 0.06;
+        this.alpha = Math.min(1, this.life / 40);
+    } else {
+        this.arrived = true;
+        if (this.life > this.maxLife - 80) this.alpha = Math.max(0, this.alpha - 0.015);
+    }
+};
+LoveParticle.prototype.draw = function() {
+    if (this.alpha <= 0) return;
+    var color = this.isPurple ? {r:232,g:121,b:249} : {r:253,g:186,b:116};
+    var glow = this.isPurple ? '#e040fb' : '#ff8a65';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + this.alpha + ')';
+    ctx.shadowColor = glow;
+    ctx.shadowBlur = 12;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+};
+LoveParticle.prototype.isDead = function() { return this.life >= this.maxLife; };
+
+function playSparkle() {
+    if (!audioCtx) return;
+    var freq = 800 + Math.random() * 1200;
+    playNote(freq, 0.08, 0, 0.015);
+}
+
+function playChime() {
+    if (!audioCtx) return;
+    var freqs = [523, 659, 784, 1047];
+    for (var i = 0; i < freqs.length; i++) {
+        playNote(freqs[i], 0.6, i * 0.1, 0.06);
+    }
+}
+
+function showFinal() {
+    if (finalShown) return; finalShown = true;
+    ayseName.style.opacity = '0'; secret.style.opacity = '0'; finalMsg.innerHTML = '';
+    var chars = finalText.split('');
+    for (var i = 0; i < chars.length; i++) {
+        var span = document.createElement('span'); span.className = 'letter';
+        if (chars[i] === '\n') span.innerHTML = '<br>'; else if (chars[i] === ' ') span.innerHTML = '&nbsp;'; else span.textContent = chars[i];
+        span.style.animationDelay = (i * 0.035) + 's';
+        var idx = i;
+        var morStart = finalText.indexOf('Mor senin');
+        var morEnd = morStart + 9;
+        var kahveStart = finalText.indexOf('kahverengi benim');
+        var kahveEnd = kahveStart + 16;
+        if (idx >= morStart && idx < morEnd) span.classList.add('purple');
+        else if (idx >= kahveStart && idx < kahveEnd) span.classList.add('brown');
+        finalMsg.appendChild(span);
+    }
+    finalBox.classList.add('visible');
+    for (var i = 0; i < 70; i++) {
+        (function(idx) {
+            setTimeout(function() {
+                var color = idx % 2 === 0 ? '#e040fb' : '#ff8a65';
+                if (idx % 4 === 0) infinities.push(new InfSymbol(Math.random() * W, H + 20, 0.6 + Math.random() * 0.6, color));
+                else hearts.push(new Heart(Math.random() * W, H + 20, 0.7 + Math.random() * 1.2, color));
+            }, idx * 30);
+        })(i);
+    }
+    setTimeout(playMelody, 800);
+}
+
+function handleMove(x, y) {
+    tmx = x; tmy = y;
+    if (!started) { started = true; initAudio(); playBgMusic(); intro.classList.add('fade-out'); }
+    if (phase < 6) {
+        var isMobile = window.innerWidth < 768;
+        var countInc = isMobile ? 3 : 1;
+        count += countInc;
+        progressBar.style.width = Math.min(100, count / THRESHOLDS[THRESHOLDS.length - 1] * 100) + '%';
+        if (Math.random() < 0.45) sparkles.push(new Sparkle(x, y));
+        if (Math.random() < 0.025 && phase >= 1) { var sh = shooters.find(function(s) { return !s.active; }); if (sh) sh.launch(); }
+    }
+}
+
+function handleClick(x, y) { for (var i = 0; i < 30; i++) sparkles.push(new Sparkle(x, y)); count += 7; pulse = 2; }
+
+canvas.addEventListener('mousemove', function(e) { handleMove(e.clientX, e.clientY); });
+canvas.addEventListener('touchmove', function(e) { e.preventDefault(); handleMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+canvas.addEventListener('click', function(e) { handleClick(e.clientX, e.clientY); });
+canvas.addEventListener('touchstart', function(e) { handleClick(e.touches[0].clientX, e.touches[0].clientY); });
+
+function animate() {
+    t++; mx += (tmx - mx) * 0.07; my += (tmy - my) * 0.07; pulse *= 0.92; beat *= 0.9;
+    var isMobile = window.innerWidth < 768;
+    var beatInterval = isMobile ? 140 : 70;
+    if (phase >= 3 && t % beatInterval === 0) { beat = 1; if (audioCtx && phase < 5) playBeat(); }
+    var prog = updatePhase();
+    var bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H));
+    bg.addColorStop(0, '#1a0830'); bg.addColorStop(0.2, '#10041c'); bg.addColorStop(0.45, '#08020f'); bg.addColorStop(0.7, '#040108'); bg.addColorStop(1, '#010003');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) { stars[i].update(); stars[i].draw(); }
+    for (var i = 0; i < cosmicDust.length; i++) { cosmicDust[i].update(); cosmicDust[i].draw(); }
+    var nebInt = Math.min(1, prog * 2 + 0.5);
+    for (var i = 0; i < nebulae.length; i++) { nebulae[i].update(); nebulae[i].draw(nebInt); }
+    if (phase >= 2) { var galRot = t * 0.0002; for (var i = 0; i < galaxyArms.length; i++) galaxyArms[i].draw(galRot, Math.min(1, (prog - 0.14) * 2.5)); }
+    if (phase >= 3) { for (var i = 0; i < auroraWaves.length; i++) auroraWaves[i].draw(Math.min(1, (prog - 0.3) * 2)); }
+    for (var i = 0; i < fireflies.length; i++) { fireflies[i].update(); fireflies[i].draw(); }
+    var orbInt = Math.min(1, prog * 1.8);
+    for (var i = 0; i < magicOrbs.length; i++) { magicOrbs[i].update(); magicOrbs[i].draw(orbInt * 0.7); }
+    for (var i = 0; i < shooters.length; i++) { shooters[i].update(); shooters[i].draw(); }
+    var mouseGlow = ctx.createRadialGradient(mx, my, 0, mx, my, 220);
+    mouseGlow.addColorStop(0, 'rgba(200, 100, 255, 0.45)'); mouseGlow.addColorStop(0.4, 'rgba(180, 80, 220, 0.2)'); mouseGlow.addColorStop(0.7, 'rgba(220, 140, 80, 0.08)'); mouseGlow.addColorStop(1, 'transparent');
+    ctx.fillStyle = mouseGlow; ctx.beginPath(); ctx.arc(mx, my, 220, 0, Math.PI * 2); ctx.fill();
+    for (var i = 0; i < purples.length; i++) { purples[i].update(prog); purples[i].draw(prog); }
+    for (var i = 0; i < browns.length; i++) { browns[i].update(prog); browns[i].draw(prog); }
+    if (phase >= 2) {
+        var connInt = Math.min(1, (prog - 0.14) * 3);
+        for (var i = 0; i < Math.min(purples.length, browns.length); i += 2) {
+            var p1 = purples[i], p2 = browns[i];
+            var dx = p2.x - p1.x, dy = p2.y - p1.y, dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 140) {
+                var lineAlpha = (1 - dist / 140) * 0.55 * connInt;
+                var lineGrad = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+                lineGrad.addColorStop(0, 'hsla(' + p1.hue + ', 90%, 65%, ' + lineAlpha + ')');
+                lineGrad.addColorStop(1, 'hsla(' + p2.hue + ', 85%, 60%, ' + lineAlpha + ')');
+                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = lineGrad; ctx.lineWidth = 1.8; ctx.stroke();
             }
         }
+    }
+    sparkles = sparkles.filter(function(s) { return s.life > 0; });
+    for (var i = 0; i < sparkles.length; i++) { sparkles[i].update(); sparkles[i].draw(); }
+    hearts = hearts.filter(function(h) { return h.life > 0; });
+    for (var i = 0; i < hearts.length; i++) { hearts[i].update(); hearts[i].draw(); }
+    infinities = infinities.filter(function(inf) { return inf.life > 0; });
+    for (var i = 0; i < infinities.length; i++) { infinities[i].update(); infinities[i].draw(); }
+    quoteList = quoteList.filter(function(q) { return !q.isDead(); });
+    for (var i = 0; i < quoteList.length; i++) { quoteList[i].update(); quoteList[i].draw(); }
+    loveParticles = loveParticles.filter(function(lp) { return !lp.isDead(); });
+    for (var i = 0; i < loveParticles.length; i++) { loveParticles[i].update(); loveParticles[i].draw(); }
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    requestAnimationFrame(animate);
+}
 
-        // Prevent zoom on double tap
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        // Cloud answers view - ?cevaplar
-        if (window.location.search.includes('cevaplar')) {
-            document.body.innerHTML = '<div style="padding: 2rem; font-family: Inter, sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); min-height: 100vh; color: #fff;"><h1 style="margin-bottom: 2rem; background: linear-gradient(135deg, #f093fb, #f5576c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎮 Ayşe\'nin Cevapları</h1><div id="answers-container"><p style="color: rgba(255,255,255,0.6);">Yükleniyor...</p></div></div>';
-            
-            loadFromCloud().then(data => {
-                const container = document.getElementById('answers-container');
-                if (data && data.answers && Object.keys(data.answers).length > 0) {
-                    let html = `<p style="color: rgba(255,255,255,0.6); margin-bottom: 1.5rem;">📅 Son güncelleme: ${data.timestamp || 'Bilinmiyor'}</p>`;
-                    html += `<p style="color: ${data.completed ? '#4ade80' : '#fbbf24'}; margin-bottom: 2rem;">${data.completed ? '✅ Oyun tamamlandı!' : '⏳ Oyun devam ediyor...'}</p>`;
-                    
-                    for (let q in questions) {
-                        const answer = data.answers[q];
-                        html += `
-                            <div style="background: rgba(255,255,255,0.08); border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
-                                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 0.5rem;">❓ ${questions[q]}</p>
-                                <p style="color: #fff; font-size: 1.1rem; font-weight: 500;">${answer ? '✅ ' + answer : '⏸️ Henüz cevap yok'}</p>
-                            </div>
-                        `;
-                    }
-                    container.innerHTML = html;
-                } else {
-                    container.innerHTML = '<p style="color: rgba(255,255,255,0.6);">Henüz cevap yok. Oyun oynanmamış veya tamamlanmamış.</p>';
-                }
-            });
-        } else {
-            // Normal game - initialize
-            createStars();
-            updateProgress(0);
-            
-            // Background music - iOS/Safari compatible
-            const bgMusic = document.getElementById('bgMusic');
-            bgMusic.volume = 0.15; // Low volume
-            let musicStarted = false;
-            
-            // Create audio context for mobile
-            let audioContext = null;
-            
-            function initAudioContext() {
-                if (!audioContext) {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    if (audioContext.state === 'suspended') {
-                        audioContext.resume();
-                    }
-                }
-            }
-            
-            function startMusic() {
-                if (!musicStarted) {
-                    initAudioContext();
-                    
-                    // Force user interaction context
-                    const playPromise = bgMusic.play();
-                    
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            musicStarted = true;
-                            console.log('Music started successfully');
-                        }).catch((error) => {
-                            console.log('Music play failed:', error);
-                            musicStarted = false; // Reset to try again
-                        });
-                    }
-                }
-            }
-            
-            // Multiple event listeners for mobile compatibility
-            const events = ['click', 'touchstart', 'touchend', 'mousedown', 'keydown'];
-            
-            events.forEach(event => {
-                document.addEventListener(event, (e) => {
-                    if (!musicStarted) {
-                        startMusic();
-                    }
-                }, { once: false, passive: true });
-            });
-            
-            // Special handling for Android Chrome
-            if (navigator.userAgent.includes('Android')) {
-                document.body.addEventListener('click', function playOnce() {
-                    startMusic();
-                    document.body.removeEventListener('click', playOnce);
-                }, { once: true });
-                
-                // Also try on first button click
-                const firstButton = document.querySelector('button');
-                if (firstButton) {
-                    firstButton.addEventListener('click', function() {
-                        setTimeout(startMusic, 100);
-                    }, { once: true });
-                }
-            }
-            
-            // Try after loading screen
-            setTimeout(() => {
-                if (!musicStarted) {
-                    startMusic();
-                }
-            }, 3000);
-            
-            // Hide loading screen
-            setTimeout(() => {
-                document.getElementById('loading').classList.add('hidden');
-            }, 2500);
-        }
-    </script>
+init(); mx = tmx = cx; my = tmy = cy; animate();
+</script>
 </body>
 </html>
